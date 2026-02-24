@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Navigation from "@/components/Navigation";
+import { getAuthUser } from "@/utils/actions";
 
 export default async function ProtectedLayout({
   children,
@@ -10,23 +11,15 @@ export default async function ProtectedLayout({
 }) {
   const supabase = await createServerSupabase();
 
+  const user = await getAuthUser();
+
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  // TO-DO create database
-  //   const {
-  //     data: { role },
-  //   } = await supabase.from("users").select("role").eq("id", user.id);
-
-  if (!user) {
-    redirect("/login");
-  }
+    data: { firstname, role },
+  } = await supabase.from("users").select("*").eq("id", user.id).single();
 
   return (
     <div className="min-h-screen bg-white">
-      {/* isAdmin={role === "admin"} */}
-      <Navigation />
+      <Navigation firstname={firstname} isAdmin={role === "admin"} />
       {children}
     </div>
   );

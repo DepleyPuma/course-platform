@@ -1,9 +1,11 @@
 "use client";
 
 import { Logo } from "@/components/ui/logo";
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
 import { Poppins } from "next/font/google";
 import { Button } from "@/components/ui/button";
+import { login } from "@/utils/actions";
+import { LoginState } from "@/utils/types";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -11,12 +13,16 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const initialState: LoginState = {};
+
 function LoginPage() {
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(false);
+  const [state, formAction, isPending] = useActionState(login, initialState);
 
-  //   it's working
-  const togglePassword = (e: Event) => {
+  console.log(state);
+
+  const togglePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsShown((prevState) => !prevState);
   };
@@ -34,8 +40,13 @@ function LoginPage() {
           Platforma Szkoleniowa
         </h2>
         <hr className="mx-10 my-4 w-full" />
-        {/* <p className="self-start pb-4 font-medium">Zaloguj się do platformy</p> */}
-        <form action="" className="flex w-full flex-col gap-3">
+        {/* error message */}
+        {state?.error && (
+          <div className="mb-4 w-full rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            {state.error}
+          </div>
+        )}
+        <form action={formAction} className="flex w-full flex-col gap-3">
           <label htmlFor="email" className="flex flex-col gap-1">
             Email
             <input
@@ -54,6 +65,7 @@ function LoginPage() {
               id="password"
               className="rounded-md border p-2 text-lg"
               placeholder="••••••••••••"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
@@ -70,9 +82,10 @@ function LoginPage() {
           <Button
             type="submit"
             size="lg"
-            className="mt-5 cursor-pointer bg-[#BBCB2E] px-8 py-6 text-lg font-semibold text-black hover:bg-[#a5b629]"
+            className="mt-5 cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
+            disabled={isPending}
           >
-            Zaloguj się
+            {isPending ? "Loguje się..." : "Zaloguj się"}
           </Button>
         </form>
         <a href="#" className="mt-6 self-start hover:underline">

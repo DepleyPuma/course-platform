@@ -11,14 +11,16 @@ import {
 import { Settings, LogOut, LayoutDashboard } from "lucide-react";
 import { Logo } from "./ui/logo";
 import Link from "next/link";
+import { logut } from "@/utils/actions";
 
 interface NavigationTypeProps {
+  firstname: string;
   isAdmin?: boolean;
 }
 
-function Navigation({ isAdmin }: NavigationTypeProps) {
+function Navigation({ firstname, isAdmin }: NavigationTypeProps) {
   const handleLogout = () => {
-    console.log("Wylogowano użytkownika");
+    logut();
   };
 
   return (
@@ -34,7 +36,7 @@ function Navigation({ isAdmin }: NavigationTypeProps) {
               <button className="rounded-full focus:ring-2 focus:ring-[#BBCB2E] focus:outline-none">
                 <Avatar className="h-10 w-10 cursor-pointer">
                   <AvatarFallback className="bg-[#BBCB2E] text-white">
-                    {isAdmin ? "A" : "J"}
+                    {firstname[0].toLocaleUpperCase()}
                   </AvatarFallback>
                 </Avatar>
               </button>

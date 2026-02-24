@@ -23,7 +23,7 @@ function HomePage() {
       <Link href="/course">
         <Button
           size="lg"
-          className="cursor-pointer bg-[#BBCB2E] px-8 py-6 text-lg font-semibold text-black hover:bg-[#a5b629]"
+          className="cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
         >
           Zacznij teraz
         </Button>
