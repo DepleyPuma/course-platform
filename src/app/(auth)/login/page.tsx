@@ -5,7 +5,7 @@ import React, { useActionState, useState } from "react";
 import { Poppins } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { login } from "@/utils/actions";
-import { LoginState } from "@/utils/types";
+import { FormState } from "@/utils/types";
 import { Eye, EyeOff } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,7 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const initialState: LoginState = {};
+const initialState: FormState = {};
 
 function LoginPage() {
   const [password, setPassword] = useState("");

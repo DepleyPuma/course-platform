@@ -2,7 +2,7 @@
 
 import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { ActionResult, LoginState, User } from "@/utils/types";
+import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export const getAuthUser = async () => {
@@ -20,9 +20,9 @@ export const getAuthUser = async () => {
 };
 
 export async function login(
-  prevState: LoginState,
+  prevState: FormState,
   formData: FormData,
-): Promise<LoginState> {
+): Promise<FormState> {
   const supabase = await createServerSupabase();
 
   const email = String(formData.get("email") ?? "");
@@ -57,43 +57,14 @@ export async function logut() {
   redirect("/login");
 }
 
-export const getUser = async (): Promise<ActionResult<User>> => {
+export const getUser = async (userId?: string): Promise<ActionResult<User>> => {
   try {
-    const supabase = await createServerSupabase();
     const user = await getAuthUser();
-
-    const { error, data } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", user.id)
-      .maybeSingle();
-
-    if (error) {
-      return {
-        success: false,
-        error: "Nie udało się znaleść użytkownika",
-      };
-    }
-
-    return { success: true, data };
-  } catch (error) {
-    if (isRedirectError(error)) throw error;
-    return {
-      success: false,
-      error: error,
-    };
-  }
-};
-
-export const getUserById = async (
-  userId: string,
-): Promise<ActionResult<User>> => {
-  try {
     const supabase = await createServerSupabase();
     const { error, data } = await supabase
       .from("users")
       .select("*")
-      .eq("id", userId)
+      .eq("id", userId ? userId : user.id)
       .maybeSingle();
 
     if (error) {
@@ -140,9 +111,9 @@ export const getAllUsers = async (): Promise<ActionResult<User[]>> => {
 };
 
 export const updateMyProfile = async (
-  prevState: LoginState,
+  prevState: FormState,
   formData: FormData,
-): Promise<LoginState> => {
+): Promise<FormState> => {
   try {
     const user = await getAuthUser();
     const supabase = await createServerSupabase();
