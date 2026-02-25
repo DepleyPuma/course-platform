@@ -74,7 +74,7 @@ function LoginPage() {
               id="password"
               className="rounded-md border py-6 lg:text-lg"
               placeholder="••••••••••••"
-              value={password}
+              defaultValue={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <Button
