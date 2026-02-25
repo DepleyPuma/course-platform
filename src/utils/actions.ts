@@ -3,6 +3,7 @@
 import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ActionResult, LoginState, User } from "@/utils/types";
+import { isRedirectError } from "next/dist/client/components/redirect-error";
 
 export const getAuthUser = async () => {
   const supabase = await createServerSupabase();
@@ -27,7 +28,7 @@ export async function login(
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   // const rememberMe = formData.get("rememberMe") === "on"; // return null or on
-
+  
   if (!email || !password) {
     return { success: false, error: "Email i hasło są wymagane" };
   }
@@ -38,6 +39,7 @@ export async function login(
   });
 
   if (error) {
+    console.log(error.message);
     return { success: false, error: "Nieprawidłowy email lub hasło" };
   }
 
@@ -75,6 +77,7 @@ export const getUser = async (): Promise<ActionResult<User>> => {
 
     return { success: true, data };
   } catch (error) {
+    if (isRedirectError(error)) throw error; 
     return {
       success: false,
       error: error,
