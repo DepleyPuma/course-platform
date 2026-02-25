@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import Navigation from "@/components/Navigation";
 import { getUser } from "@/utils/actions";
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function ProtectedLayout({
   children,
@@ -21,9 +22,10 @@ export default async function ProtectedLayout({
   const isAdmin = role === "admin";
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="flex h-screen flex-col overflow-hidden bg-white">
       <Navigation firstname={firstname} isAdmin={isAdmin} />
       {children}
+      <Toaster />
     </div>
   );
 }
