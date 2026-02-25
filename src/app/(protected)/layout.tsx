@@ -1,25 +1,28 @@
 import React, { ReactNode } from "react";
-import { createServerSupabase } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import Navigation from "@/components/Navigation";
-import { getAuthUser } from "@/utils/actions";
+import { getUser } from "@/utils/actions";
 
 export default async function ProtectedLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  const supabase = await createServerSupabase();
+  const result = await getUser();
 
-  const user = await getAuthUser();
+  if (!result.success) {
+    console.log(result.error);
+    return;
+  }
 
   const {
     data: { firstname, role },
-  } = await supabase.from("users").select("*").eq("id", user.id).single();
+  } = result;
+
+  const isAdmin = role === "admin";
 
   return (
     <div className="min-h-screen bg-white">
-      <Navigation firstname={firstname} isAdmin={role === "admin"} />
+      <Navigation firstname={firstname} isAdmin={isAdmin} />
       {children}
     </div>
   );
