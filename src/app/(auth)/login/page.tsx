@@ -23,8 +23,6 @@ function LoginPage() {
   const [isShown, setIsShown] = useState(false);
   const [state, formAction, isPending] = useActionState(login, initialState);
 
-  console.log(state);
-
   const togglePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsShown((prevState) => !prevState);
