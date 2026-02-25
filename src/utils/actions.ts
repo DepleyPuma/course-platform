@@ -28,7 +28,7 @@ export async function login(
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   // const rememberMe = formData.get("rememberMe") === "on"; // return null or on
-  
+
   if (!email || !password) {
     return { success: false, error: "Email i hasło są wymagane" };
   }
@@ -77,7 +77,7 @@ export const getUser = async (): Promise<ActionResult<User>> => {
 
     return { success: true, data };
   } catch (error) {
-    if (isRedirectError(error)) throw error; 
+    if (isRedirectError(error)) throw error;
     return {
       success: false,
       error: error,
@@ -135,6 +135,45 @@ export const getAllUsers = async (): Promise<ActionResult<User[]>> => {
     return {
       success: false,
       error: error,
+    };
+  }
+};
+
+export const updateMyProfile = async (
+  prevState: LoginState,
+  formData: FormData,
+): Promise<LoginState> => {
+  try {
+    const user = await getAuthUser();
+    const supabase = await createServerSupabase();
+
+    const firstname = String(formData.get("firstname") ?? "");
+    const lastname = String(formData.get("lastname") ?? "");
+
+    if (!firstname || !lastname) {
+      return {
+        success: false,
+        error: "Imię i Nazwisko nie mogą być puste",
+      };
+    }
+
+    const { error } = await supabase
+      .from("users")
+      .update({ firstname, lastname })
+      .eq("id", user.id);
+
+    if (error) {
+      return {
+        success: false,
+        error: `Błąd podczas aktualizacji profilu użytkownika`,
+      };
+    }
+
+    return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
     };
   }
 };
