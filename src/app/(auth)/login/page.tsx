@@ -6,6 +6,9 @@ import { Poppins } from "next/font/google";
 import { Button } from "@/components/ui/button";
 import { login } from "@/utils/actions";
 import { LoginState } from "@/utils/types";
+import { Eye, EyeOff } from "lucide-react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -47,29 +50,44 @@ function LoginPage() {
           </div>
         )}
         <form action={formAction} className="flex w-full flex-col gap-3">
-          <label htmlFor="email" className="flex flex-col gap-1">
+          <Label
+            htmlFor="email"
+            className="text-md flex flex-col items-start gap-2"
+          >
             Email
-            <input
+            <Input
               type="text"
               name="email"
               id="email"
-              className="rounded-md border p-2 text-lg"
+              className="rounded-md border py-6 lg:text-lg"
               placeholder="jan.kowalski@osp.pl"
             />
-          </label>
-          <label htmlFor="password" className="flex flex-col gap-1">
+          </Label>
+          <Label
+            htmlFor="password"
+            className="text-md relative flex flex-col items-start gap-2"
+          >
             Hasło
-            <input
+            <Input
               type={isShown ? "text" : "password"}
               name="password"
               id="password"
-              className="rounded-md border p-2 text-lg"
+              className="rounded-md border py-6 lg:text-lg"
               placeholder="••••••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </label>
-          <label htmlFor="rememberMe" className="mt-2 flex items-center gap-2">
+            <Button
+              type="button"
+              onClick={togglePassword}
+              size="sm"
+              variant="ghost"
+              className="absolute top-10 right-4 cursor-pointer"
+            >
+              {isShown ? <EyeOff /> : <Eye />}
+            </Button>
+          </Label>
+          {/* <label htmlFor="rememberMe" className="mt-2 flex items-center gap-2">
             <input
               type="checkbox"
               name="rememberMe"
@@ -77,12 +95,12 @@ function LoginPage() {
               className="h-4 w-4 accent-(--second-color-hover)"
             />
             Zapamiętaj mnie
-          </label>
+          </label> */}
 
           <Button
             type="submit"
             size="lg"
-            className="mt-5 cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
+            className="mt-12 cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
             disabled={isPending}
           >
             {isPending ? "Loguje się..." : "Zaloguj się"}
