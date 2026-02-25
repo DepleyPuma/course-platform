@@ -2,7 +2,7 @@
 
 import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { LoginState } from "@/utils/types";
+import { ActionResult, LoginState, User } from "@/utils/types";
 
 export const getAuthUser = async () => {
   const supabase = await createServerSupabase();
@@ -28,10 +28,8 @@ export async function login(
   const password = String(formData.get("password") ?? "");
   // const rememberMe = formData.get("rememberMe") === "on"; // return null or on
 
-  // console.log(rememberMe);
-
   if (!email || !password) {
-    return { error: "Email i hasło są wymagane" };
+    return { success: false, error: "Email i hasło są wymagane" };
   }
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -40,7 +38,7 @@ export async function login(
   });
 
   if (error) {
-    return { error: "Nieprawidłowy email lub hasło" };
+    return { success: false, error: "Nieprawidłowy email lub hasło" };
   }
 
   redirect("/home");
@@ -56,3 +54,84 @@ export async function logut() {
 
   redirect("/login");
 }
+
+export const getUser = async (): Promise<ActionResult<User>> => {
+  try {
+    const supabase = await createServerSupabase();
+    const user = await getAuthUser();
+
+    const { error, data } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (error) {
+      return {
+        success: false,
+        error: "Nie udało się znaleść użytkownika",
+      };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error,
+    };
+  }
+};
+
+export const getUserById = async (
+  userId: string,
+): Promise<ActionResult<User>> => {
+  try {
+    const supabase = await createServerSupabase();
+    const { error, data } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", userId)
+      .maybeSingle();
+
+    if (error) {
+      return {
+        success: false,
+        error: "Nie udało się znaleść użytkownika",
+      };
+    }
+
+    return { success: true, data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error,
+    };
+  }
+};
+
+export const getAllUsers = async (): Promise<ActionResult<User[]>> => {
+  try {
+    const user = await getAuthUser();
+    const supabse = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const { error, data } = await supabse.from("users").select("*");
+
+    if (error) {
+      return {
+        success: false,
+        error: "Nie udało się pobrać listy użytkowników",
+      };
+    }
+
+    return { success: true, data: data ?? [] };
+  } catch (error) {
+    return {
+      success: false,
+      error: error,
+    };
+  }
+};
