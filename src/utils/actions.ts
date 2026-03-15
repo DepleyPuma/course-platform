@@ -39,7 +39,6 @@ export async function login(
   });
 
   if (error) {
-    console.log(error.message);
     return { success: false, error: "Nieprawidłowy email lub hasło" };
   }
 
@@ -136,11 +135,76 @@ export const updateMyProfile = async (
     if (error) {
       return {
         success: false,
-        error: `Błąd podczas aktualizacji profilu użytkownika`,
+        error: "Błąd podczas aktualizacji profilu użytkownika",
       };
     }
 
     return { success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
+    };
+  }
+};
+
+export const changePassword = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
+  try {
+    const supabase = await createServerSupabase();
+    const currentPassword = String(formData.get("currentPassword"));
+    const newPassword = String(formData.get("newPassword"));
+    const confirmNewPassword = String(formData.get("confirmNewPassword"));
+
+    if (!currentPassword || currentPassword.length === 0) {
+      return {
+        success: false,
+        error: "Musisz podać obecne hasło",
+      };
+    }
+
+    if (!newPassword || currentPassword.length === 0) {
+      return {
+        success: false,
+        error: "Musisz podać nowe hasło",
+      };
+    }
+
+    if (
+      !confirmNewPassword ||
+      currentPassword.length === 0 ||
+      confirmNewPassword !== newPassword
+    ) {
+      return {
+        success: false,
+        error: "Powtórzone hasło nie zgadza się z nowym hasłem",
+      };
+    }
+
+    const { data, error } = await supabase.rpc("change_user_password", {
+      current_password: currentPassword,
+      new_password: newPassword,
+    });
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+
+    if (!data.success) {
+      return {
+        success: false,
+        error: data.error,
+      };
+    }
+
+    return {
+      success: true,
+    };
   } catch (error) {
     return {
       success: false,
