@@ -19,6 +19,7 @@ const poppins = Poppins({
 const initialState: FormState = {};
 
 function LoginPage() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShown, setIsShown] = useState(false);
   const [state, formAction, isPending] = useActionState(login, initialState);
@@ -59,6 +60,8 @@ function LoginPage() {
               id="email"
               className="rounded-md border py-6 lg:text-lg"
               placeholder="jan.kowalski@osp.pl"
+              defaultValue={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Label>
           <Label
