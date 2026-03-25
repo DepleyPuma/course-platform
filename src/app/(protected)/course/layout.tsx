@@ -1,11 +1,11 @@
-import { getUser } from "@/utils/actions";
+import { CourseSidebar } from "@/components/course/CourseSidebar";
 import { Sidebar } from "@/components/Sidebar";
+import { Button } from "@/components/ui/button";
 import {
   sidebarCourseContent,
   sidebarSettingsContent,
 } from "@/utils/sidebarContent";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export default async function CourseLayout({
   children,
@@ -14,7 +14,7 @@ export default async function CourseLayout({
 }) {
   return (
     <div className="flex flex-1 overflow-hidden">
-      <Sidebar>
+      {/* <Sidebar>
         <h2 className="mb-4 hidden text-xl font-bold md:block">OSP Marki</h2>
         <p className="mb-6 text-sm text-gray-600">Wstęp</p>
         {sidebarCourseContent.map((module) => (
@@ -48,7 +48,8 @@ export default async function CourseLayout({
             </Link>
           );
         })}
-      </Sidebar>
+      </Sidebar> */}
+      <CourseSidebar sidebarCourseContent={sidebarCourseContent} />
       {children}
     </div>
   );

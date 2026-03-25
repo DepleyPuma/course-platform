@@ -20,7 +20,8 @@ function HomePage() {
         Praktyczne umiejętności, które wniosą twoje umiejętności poziom wyżej
       </p>
 
-      <Link href="/course">
+      {/* temp solution for this redirect */}
+      <Link href="/course/module-01/lesson-01">
         <Button
           size="lg"
           className="cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"

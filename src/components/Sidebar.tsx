@@ -14,7 +14,7 @@ type SidebarContentTypeProps = {
 };
 
 export const Sidebar = ({ children }: SidebarTypeProps) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);
@@ -45,7 +45,7 @@ export const Sidebar = ({ children }: SidebarTypeProps) => {
 
       {/* Sidebar - Mobile (overlay) */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-3/4 max-w-sm bg-gray-50 transition-transform duration-300 md:hidden ${
+        className={`no-scrollbar fixed top-0 bottom-0 left-0 z-50 w-3/4 max-w-sm overflow-y-scroll bg-gray-50 transition-transform duration-300 md:hidden ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -74,7 +74,7 @@ export const Sidebar = ({ children }: SidebarTypeProps) => {
       <aside
         className={`hidden border-r border-gray-200 bg-gray-50 transition-all duration-300 md:block ${
           isSidebarOpen ? "w-80" : "w-0"
-        } overflow-hidden`}
+        } no-scrollbar overflow-y-scroll`}
       >
         <SidebarContent setIsSidebarOpen={setIsSidebarOpen}>
           {children}

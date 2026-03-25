@@ -53,6 +53,10 @@ export async function logut() {
     throw new Error(`Logut failed: ${error.message}`);
   }
 
+  if (isRedirectError(error)) {
+    throw error;
+  }
+
   redirect("/login");
 }
 
@@ -75,6 +79,7 @@ export const getUser = async (userId?: string): Promise<ActionResult<User>> => {
 
     return { success: true, data };
   } catch (error) {
+    if (isRedirectError(error)) throw error;
     return {
       success: false,
       error: error,
