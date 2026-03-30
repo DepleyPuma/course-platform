@@ -21,7 +21,7 @@ function HomePage() {
       </p>
 
       {/* temp solution for this redirect */}
-      <Link href="/course/module-01/lesson-01">
+      <Link href="/course/1/1">
         <Button
           size="lg"
           className="cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
