@@ -38,14 +38,14 @@ export const sidebarSettingsContent = [
 export const sidebarCourseContent: Module[] = [
   {
     id: "1",
-    title: "Wprowadzenie",
+    title: "Podstawy służby w OSP",
     orderIndex: 1,
     status: "published",
     lessons: [
       {
         id: "1",
         moduleId: "1",
-        title: "Czym jest Tailwind?",
+        title: "Rola strażaka OSP",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/rlwdxCC907Y",
         videoDuration: "2:33",
@@ -55,7 +55,7 @@ export const sidebarCourseContent: Module[] = [
       {
         id: "2",
         moduleId: "1",
-        title: "Narzędzia",
+        title: "Podstawowe wyposażenie osobiste",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/rlwdxCC907Y",
         videoDuration: "0:41",
@@ -65,7 +65,7 @@ export const sidebarCourseContent: Module[] = [
       {
         id: "3",
         moduleId: "1",
-        title: "Instalacja Tailwind",
+        title: "Przygotowanie do wyjazdu alarmowego",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/rlwdxCC907Y",
         videoDuration: "1:20",
@@ -76,14 +76,14 @@ export const sidebarCourseContent: Module[] = [
   },
   {
     id: "2",
-    title: "Poznaj Tailwind",
+    title: "Podstawy działań gaśniczych",
     orderIndex: 2,
     status: "published",
     lessons: [
       {
         id: "4",
         moduleId: "2",
-        title: "Kontenery i breakpointy",
+        title: "Zasady bezpieczeństwa na miejscu akcji",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/OViC3hOylVs",
         videoDuration: "5:27",
@@ -93,7 +93,7 @@ export const sidebarCourseContent: Module[] = [
       {
         id: "5",
         moduleId: "2",
-        title: "Kolumny",
+        title: "Budowa i obsługa linii gaśniczej",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/OViC3hOylVs",
         videoDuration: "1:55",
@@ -103,7 +103,7 @@ export const sidebarCourseContent: Module[] = [
       {
         id: "6",
         moduleId: "2",
-        title: "Kolory",
+        title: "Rodzaje pożarów i środki gaśnicze",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/OViC3hOylVs",
         videoDuration: "2:54",
@@ -114,14 +114,14 @@ export const sidebarCourseContent: Module[] = [
   },
   {
     id: "3",
-    title: "Konfiguracja kolorów",
+    title: "Łączność i koordynacja działań",
     orderIndex: 3,
     status: "published",
     lessons: [
       {
         id: "7",
         moduleId: "3",
-        title: "Konfiguracja kolorów cz. 1",
+        title: "Łączność radiowa - podstawy",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/UBOj6rqRUME",
         videoDuration: "3:49",
@@ -131,7 +131,7 @@ export const sidebarCourseContent: Module[] = [
       {
         id: "8",
         moduleId: "3",
-        title: "Konfiguracja kolorów cz. 2",
+        title: "Łączność radiowa - komunikaty praktyczne",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/UBOj6rqRUME",
         videoDuration: "3:14",
@@ -142,14 +142,14 @@ export const sidebarCourseContent: Module[] = [
   },
   {
     id: "4",
-    title: "Margin & padding",
+    title: "Ratownictwo techniczne",
     orderIndex: 4,
     status: "published",
     lessons: [
       {
         id: "9",
         moduleId: "4",
-        title: "Margin & padding",
+        title: "Sprzęt hydrauliczny i ratownictwo techniczne",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/UBOj6rqRUME",
         videoDuration: "4:27",
@@ -160,14 +160,14 @@ export const sidebarCourseContent: Module[] = [
   },
   {
     id: "5",
-    title: "Width & height",
+    title: "Kwalifikowana pierwsza pomoc",
     orderIndex: 5,
     status: "published",
     lessons: [
       {
         id: "10",
         moduleId: "5",
-        title: "Width & height",
+        title: "Pierwsza pomoc w działaniach OSP",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/UBOj6rqRUME",
         videoDuration: "4:09",
@@ -178,14 +178,14 @@ export const sidebarCourseContent: Module[] = [
   },
   {
     id: "6",
-    title: "Display & visibility",
+    title: "Działania nocne i ograniczona widoczność",
     orderIndex: 6,
     status: "published",
     lessons: [
       {
         id: "11",
         moduleId: "6",
-        title: "Display & visibility",
+        title: "Organizacja działań podczas akcji nocnej",
         type: "video",
         videoUrl: "https://www.youtube.com/embed/UBOj6rqRUME",
         videoDuration: "0:54",
