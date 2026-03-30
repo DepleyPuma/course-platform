@@ -3,5 +3,5 @@ export default async function AdminProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return { children };
+  return <>{children}</>;
 }
