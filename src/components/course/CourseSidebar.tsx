@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
-import { Button } from "@/components/ui/button";
 import { Module, Lesson, sidebarSettingsContent } from "@/utils/sidebarContent";
 import Link from "next/link";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -45,14 +44,17 @@ export const CourseSidebar = ({
             onClick={() => toggleModule(module.id)}
             className="flex w-full cursor-pointer flex-col items-start justify-between transition-colors hover:bg-gray-50"
           >
-            <h6 className="flex w-full items-center justify-between px-4 py-6">
-              <span className="text-left text-lg font-semibold">
+            <h6 className="flex w-full items-center justify-between gap-2 px-4 py-6">
+              <span
+                className="min-w-0 flex-1 truncate text-left text-lg font-semibold"
+                title={module.title}
+              >
                 {module.title}
               </span>
               {expandedModules.includes(module.id) ? (
-                <ChevronDown className="h-5 w-5 text-gray-500" />
+                <ChevronDown className="h-5 w-5 shrink-0 text-gray-500" />
               ) : (
-                <ChevronRight className="h-5 w-5 text-gray-500" />
+                <ChevronRight className="h-5 w-5 shrink-0 text-gray-500" />
               )}
             </h6>
           </div>
@@ -68,8 +70,9 @@ export const CourseSidebar = ({
                   className={`flex w-full cursor-pointer items-start gap-3 px-4 py-3 transition-colors hover:bg-gray-50 ${
                     currentLesson?.id === lesson.id ? "bg-blue-50" : ""
                   }`}
+                  title={lesson.title}
                 >
-                  {lesson.title}
+                  <span className="block w-full truncate">{lesson.title}</span>
                 </Link>
               ))}
             </div>
