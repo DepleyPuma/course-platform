@@ -27,7 +27,6 @@ export async function login(
 
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
-  // const rememberMe = formData.get("rememberMe") === "on"; // return null or on
 
   if (!email || !password) {
     return { success: false, error: "Email i hasło są wymagane" };

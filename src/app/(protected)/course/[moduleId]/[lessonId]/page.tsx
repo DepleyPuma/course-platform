@@ -33,11 +33,6 @@ async function LessonPage({
       {/* Video Player */}
       <div className="relative mx-0 mt-6 aspect-video w-full max-w-5xl 2xl:mx-32">
         <VideoPlayer lesson={lesson} />
-        {/* <VideoPlayer 
-          lesson={lesson}
-          userId={user.id}
-          initialProgress={progress}
-        /> */}
       </div>
 
       {/* Description */}
@@ -49,20 +44,12 @@ async function LessonPage({
       </div>
 
       <div className="mx-auto flex w-full flex-col justify-between gap-4 border-t pt-6 sm:flex-row 2xl:ml-32 2xl:w-[80%]">
-        <Button
-          // onClick={handlePreviousLesson}
-          // disabled={!previousLesson}
-          className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
-        >
+        <Button className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50">
           <ArrowLeft className="h-4 w-4" />
           <span>Poprzednia lekcja</span>
         </Button>
 
-        <Button
-          // onClick={handleNextLesson}
-          // disabled={!nextLesson}
-          className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
-        >
+        <Button className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50">
           <span>Zakończ i przejdź do następnej lekcji</span>
           <ArrowRight className="h-4 w-4" />
         </Button>
