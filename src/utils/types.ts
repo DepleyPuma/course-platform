@@ -1,3 +1,5 @@
+import { LucideIcon } from "lucide-react";
+
 export type FormState =
   | {
       success?: boolean;
@@ -18,4 +20,12 @@ export type User = {
   role: "user" | "admin";
   additional_roles: ("kierowca" | "dowódca")[];
   created_at: string;
+};
+
+export type Card = {
+  icon: LucideIcon;
+  label: string;
+  value: number | string;
+  bgColor: string;
+  iconColor: string;
 };

@@ -1,4 +1,4 @@
-import { BookOpen, Settings } from "lucide-react";
+import { BookOpen, LayoutDashboard, Settings, Users } from "lucide-react";
 
 export interface Lesson {
   id: string;
@@ -193,5 +193,23 @@ export const sidebarCourseContent: Module[] = [
         status: "published",
       },
     ],
+  },
+];
+
+export const sidebarAdminContent = [
+  {
+    icon: LayoutDashboard,
+    label: "Dashboard",
+    path: "/admin/dashboard",
+  },
+  {
+    icon: BookOpen,
+    label: "Moduły",
+    path: "/admin/modules",
+  },
+  {
+    icon: Users,
+    label: "Użytkownicy",
+    path: "/admin/users",
   },
 ];

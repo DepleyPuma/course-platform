@@ -1,7 +1,31 @@
+import Page404 from "@/app/not-found";
+import AdminSidebar from "@/components/admin/AdminSidebar";
+import { getUser } from "@/utils/actions";
+
 export default async function AdminProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  const result = await getUser();
+
+  if (!result.success) {
+    console.log(result.error);
+    return;
+  }
+
+  const {
+    data: { role },
+  } = result;
+
+  if (role !== "admin") {
+    return <Page404 />;
+  }
+
+  return (
+    <div className="flex flex-1 overflow-hidden">
+      <AdminSidebar />
+      {children}
+    </div>
+  );
 }
