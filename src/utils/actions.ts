@@ -25,8 +25,8 @@ export async function login(
 ): Promise<FormState> {
   const supabase = await createServerSupabase();
 
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
+  const email = String(formData.get("email") ?? "").trim();
+  const password = String(formData.get("password") ?? "").trim();
 
   if (!email || !password) {
     return { success: false, error: "Email i hasło są wymagane" };
