@@ -88,15 +88,6 @@ function LoginPage() {
               {isShown ? <EyeOff /> : <Eye />}
             </Button>
           </Label>
-          {/* <label htmlFor="rememberMe" className="mt-2 flex items-center gap-2">
-            <input
-              type="checkbox"
-              name="rememberMe"
-              id="rememberMe"
-              className="h-4 w-4 accent-(--second-color-hover)"
-            />
-            Zapamiętaj mnie
-          </label> */}
 
           <Button
             type="submit"
