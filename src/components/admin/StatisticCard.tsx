@@ -6,12 +6,11 @@ type StatisticCardTypeProps = {
 };
 
 export default function StatisticCard({ card }: StatisticCardTypeProps) {
-  const Icon = card.icon;
   return (
     <div className={`${card.bgColor} rounded-lg border border-gray-200 p-6`}>
       <div className="flex items-center gap-4">
         <div className={`rounded-lg p-3 ${card.iconColor} bg-white`}>
-          <Icon className="h-6 w-6" />
+          <card.icon className="h-6 w-6" />
         </div>
         <div>
           <p className="text-sm text-gray-600">{card.label}</p>

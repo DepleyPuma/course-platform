@@ -6,7 +6,7 @@ function AdminDashboradPage() {
   return (
     <div className="flex-1 px-4 pt-12">
       <h1 className="mb-8 text-3xl font-bold">Dashboard</h1>
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-8 grid grid-cols-1 gap-4 pr-4 sm:grid-cols-2 lg:grid-cols-4">
         {statCards.map((card, index) => (
           <StatisticCard card={card} key={index} />
         ))}
