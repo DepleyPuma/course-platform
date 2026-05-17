@@ -8,7 +8,9 @@ type VideoPlayerTypeProps = {
 
 export const VideoPlayer = ({ lesson }: VideoPlayerTypeProps) => {
   return (
-    <div className="relative mb-6 aspect-video overflow-hidden rounded-lg bg-black">
+    // max-w-250 when sidebar is open
+    // max-w-350 when sidebar isn't open
+    <div className="relative mb-6 aspect-video w-full max-w-350 overflow-hidden rounded-lg bg-black">
       <ReactPlayer
         src={lesson.videoUrl}
         width="100%"

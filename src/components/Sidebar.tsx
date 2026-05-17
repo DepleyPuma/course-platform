@@ -73,7 +73,7 @@ export const Sidebar = ({ children }: SidebarTypeProps) => {
       {/* Sidebar - Desktop/Tablet */}
       <aside
         className={`hidden border-r border-gray-200 bg-gray-50 transition-all duration-300 md:block ${
-          isSidebarOpen ? "w-80" : "w-0"
+          isSidebarOpen ? "w-80 2xl:w-100" : "w-0"
         } no-scrollbar overflow-y-scroll`}
       >
         <SidebarContent setIsSidebarOpen={setIsSidebarOpen}>
@@ -108,7 +108,7 @@ const SidebarContent = ({
     <div className="p-4 whitespace-nowrap">
       {/* Przycisk zamykania na mobile */}
       <div className="mb-4 flex items-center justify-between md:hidden">
-        <h2 className="text-xl font-bold">Menu</h2>
+        <h2 className="text-xl font-bold">OSP Marki</h2>
         <button
           onClick={() => setIsSidebarOpen(false)}
           className="rounded-lg p-2 hover:bg-gray-200"
