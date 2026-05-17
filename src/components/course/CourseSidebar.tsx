@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { Module, Lesson, sidebarSettingsContent } from "@/utils/sidebarContent";
 import Link from "next/link";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight, Circle, Play } from "lucide-react";
 
 type CourseSidebarTypeProps = {
   sidebarCourseContent: Module[];
@@ -72,7 +72,14 @@ export const CourseSidebar = ({
                   }`}
                   title={lesson.title}
                 >
-                  <span className="block w-full truncate">{lesson.title}</span>
+                  <Circle className="mt-1.5 h-5 w-5 shrink-0 text-gray-400" />
+                  <div className="truncate">
+                    <p className="w-full">{lesson.title}</p>
+                    <p className="flex items-center gap-2">
+                      <Play className="h-3 w-3" />
+                      {lesson.videoDuration}
+                    </p>
+                  </div>
                 </Link>
               ))}
             </div>
