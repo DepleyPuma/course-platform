@@ -26,7 +26,7 @@ export const sidebarSettingsContent = [
   {
     icon: BookOpen,
     label: "Kurs",
-    path: "/course",
+    path: "/course/1/1",
   },
   {
     icon: Settings,
