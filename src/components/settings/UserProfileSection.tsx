@@ -25,6 +25,8 @@ export const UserProfileSection = ({
 
   const setAdditionalRoles = () => {
     if (user.additional_roles.length > 0) {
+      return user.additional_roles.join(", ");
+    } else if (user.additional_roles.length === 1) {
       return user.additional_roles.join(" ");
     } else {
       return "Brak dodatkowych ról";
