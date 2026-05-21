@@ -4,6 +4,7 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { Module } from "./sidebarContent";
 
 export const getAuthUser = async () => {
   const supabase = await createServerSupabase();
@@ -57,6 +58,15 @@ export async function logut() {
   }
 
   redirect("/login");
+}
+
+export async function resetPassword(
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  console.log("reset password function");
+
+  return { success: true };
 }
 
 export const getUser = async (userId?: string): Promise<ActionResult<User>> => {
@@ -213,6 +223,30 @@ export const changePassword = async (
     return {
       success: false,
       error: String(error),
+    };
+  }
+};
+
+export const getAllModules = async (): Promise<ActionResult<Module[]>> => {
+  try {
+    const user = await getAuthUser();
+    const supbase = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const { error, data } = await supbase.from("modules").select("*");
+
+    if (error) {
+      return { success: false, error: "Nie udało się pobrać listy modułów" };
+    }
+
+    return { success: true, data: data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error,
     };
   }
 };
