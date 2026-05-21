@@ -1,16 +1,18 @@
 import { BookOpen, LayoutDashboard, Settings, Users } from "lucide-react";
 
-export interface Lesson {
+export interface LessonPreview {
   id: string;
-  moduleId: string;
   title: string;
+  orderIndex: number;
+  videoDuration?: string;
+}
+export interface Lesson extends LessonPreview {
+  moduleId: string;
   type: "video" | "pdf" | "text";
   description?: string;
   videoUrl?: string;
-  videoDuration?: string;
   pdfUrl?: string;
   textContent?: string;
-  orderIndex: number;
   status: "published" | "draft";
 }
 
