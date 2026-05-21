@@ -98,7 +98,7 @@ function LoginPage() {
             {isPending ? "Loguje się..." : "Zaloguj się"}
           </Button>
         </form>
-        <a href="#" className="mt-6 self-start hover:underline">
+        <a href="/reset-password" className="mt-6 self-start hover:underline">
           Zapomniałeś hasła?
         </a>
         <hr className="mx-10 my-4 w-full" />
