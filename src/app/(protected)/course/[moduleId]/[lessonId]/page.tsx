@@ -1,8 +1,8 @@
 import { VideoPlayer } from "@/components/course/VideoPlayer";
 import { Button } from "@/components/ui/button";
-import { Lesson, sidebarCourseContent } from "@/utils/sidebarContent";
+import { getAllModules, getLessonById } from "@/utils/actions";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import React from "react";
+import Link from "next/link";
 
 async function LessonPage({
   params,
@@ -11,20 +11,35 @@ async function LessonPage({
 }) {
   const { moduleId, lessonId } = await params;
 
-  const currentModule = sidebarCourseContent.find(
-    (module) => module.id === moduleId,
-  )!;
+  const [lessonResult, modulesResult] = await Promise.all([
+    getLessonById(lessonId),
+    getAllModules(),
+  ]);
 
-  const lessons = currentModule.lessons;
-  const lesson = lessons?.find((lesson) => lesson.id === lessonId) as Lesson;
+  if (!lessonResult.success) {
+    return (
+      <div className="p-8 text-red-500">Nie udało się załadować lekcji.</div>
+    );
+  }
 
-  console.log(lesson);
+  const lesson = lessonResult.data;
+
+  // Znajdź aktualny moduł i lekcje do nawigacji
+  const currentModule = modulesResult.success
+    ? modulesResult.data.find((m) => m.id === moduleId)
+    : null;
+
+  const lessons = currentModule?.lessons ?? [];
+  const currentIndex = lessons.findIndex((l) => l.id === lessonId);
+  const prevLesson = currentIndex > 0 ? lessons[currentIndex - 1] : null;
+  const nextLesson =
+    currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
 
   return (
     <div className="flex h-full flex-1 flex-col items-start justify-start overflow-y-scroll p-4 md:p-8">
       {/* Header */}
       <header className="bg-white px-2 py-4">
-        <p className="text-sm text-gray-500">{currentModule.title}</p>
+        <p className="text-sm text-gray-500">{currentModule?.title}</p>
         <h1 className="text-2xl font-bold">{lesson.title}</h1>
       </header>
 
@@ -41,17 +56,42 @@ async function LessonPage({
         </p>
       </div>
 
-      {/* Previouse Lesson Button */}
+      {/* Button navigation */}
       <div className="mx-auto flex w-full flex-col justify-between gap-4 border-t pt-6 sm:flex-row">
-        <Button className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50">
-          <ArrowLeft className="h-4 w-4" />
-          <span>Poprzednia lekcja</span>
+        <Button
+          disabled={!prevLesson}
+          className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
+          asChild={!!prevLesson}
+        >
+          {prevLesson ? (
+            <Link href={`/course/${moduleId}/${prevLesson.id}`}>
+              <ArrowLeft className="h-4 w-4" />
+              <span>Poprzednia lekcja</span>
+            </Link>
+          ) : (
+            <>
+              <ArrowLeft className="h-4 w-4" />
+              <span>Poprzednia lekcja</span>
+            </>
+          )}
         </Button>
 
-        {/* Next Lesson Button */}
-        <Button className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50">
-          <span>Zakończ i przejdź do następnej lekcji</span>
-          <ArrowRight className="h-4 w-4" />
+        <Button
+          disabled={!nextLesson}
+          className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
+          asChild={!!nextLesson}
+        >
+          {nextLesson ? (
+            <Link href={`/course/${moduleId}/${nextLesson.id}`}>
+              <span>Zakończ i przejdź do następnej lekcji</span>
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          ) : (
+            <>
+              <span>Zakończ i przejdź do następnej lekcji</span>
+              <ArrowRight className="h-4 w-4" />
+            </>
+          )}
         </Button>
       </div>
     </div>
