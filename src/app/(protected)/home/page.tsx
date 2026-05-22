@@ -1,9 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
+import { getAllModules } from "@/utils/actions";
 import Link from "next/link";
 import React from "react";
 
-function HomePage() {
+async function HomePage() {
+  const result = await getAllModules();
+
+  const href =
+    result.success && result.data[0]?.lessons?.[0]
+      ? `/course/${result.data[0].id}/${result.data[0].lessons[0].id}`
+      : null;
+
   return (
     <div className="flex flex-col items-center justify-center px-6 py-24 md:py-32">
       <div className="mb-12">
@@ -20,8 +28,7 @@ function HomePage() {
         Praktyczne umiejętności, które wniosą twoje umiejętności poziom wyżej
       </p>
 
-      {/* temp solution for this redirect */}
-      <Link href="/course/1/1">
+      <Link href={href!}>
         <Button
           size="lg"
           className="cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
