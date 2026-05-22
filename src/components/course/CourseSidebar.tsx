@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
-import { Module, Lesson, sidebarSettingsContent } from "@/utils/sidebarContent";
-import Link from "next/link";
+import { Module, sidebarSettingsContent } from "@/utils/sidebarContent";
 import { ChevronDown, ChevronRight, Circle, Play } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 type CourseSidebarTypeProps = {
   sidebarCourseContent: Module[];
@@ -13,10 +14,11 @@ type CourseSidebarTypeProps = {
 export const CourseSidebar = ({
   sidebarCourseContent,
 }: CourseSidebarTypeProps) => {
-  const [expandedModules, setExpandedModules] = useState<string[]>(["1"]);
-  const [currentLesson, setCurrentLesson] = useState<Lesson | undefined>(
-    sidebarCourseContent[0]?.lessons![0],
-  );
+  const pathname = usePathname();
+
+  const [expandedModules, setExpandedModules] = useState<string[]>([
+    sidebarCourseContent[0].id,
+  ]);
 
   const toggleModule = (moduleId: string) => {
     setExpandedModules((prevState) =>
@@ -26,8 +28,16 @@ export const CourseSidebar = ({
     );
   };
 
-  const handleLesson = (lesson: Lesson) => {
-    setCurrentLesson(lesson);
+  const convertTime = (time: string | undefined) => {
+    if (!time) return;
+
+    const [h, m, s] = time.split(":").map(Number);
+
+    if (h > 0) {
+      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
 
   return (
@@ -62,26 +72,30 @@ export const CourseSidebar = ({
           {/* lessons if module is open */}
           {expandedModules.includes(module.id) && (
             <div className="w-full border-t border-gray-200">
-              {module.lessons?.map((lesson) => (
-                <Link
-                  href={`/course/${module.id}/${lesson.id}`}
-                  onClick={() => handleLesson(lesson)}
-                  key={lesson.id}
-                  className={`flex w-full cursor-pointer items-start gap-3 px-4 py-3 transition-colors hover:bg-gray-50 ${
-                    currentLesson?.id === lesson.id ? "bg-blue-50" : ""
-                  }`}
-                  title={lesson.title}
-                >
-                  <Circle className="mt-1.5 h-5 w-5 shrink-0 text-gray-400" />
-                  <div className="truncate">
-                    <p className="w-full">{lesson.title}</p>
-                    <p className="flex items-center gap-2">
-                      <Play className="h-3 w-3" />
-                      {lesson.videoDuration}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+              {module.lessons?.map((lesson) => {
+                const href = `/course/${module.id}/${lesson.id}`;
+                const isActive = pathname === href;
+
+                return (
+                  <Link
+                    href={href}
+                    key={lesson.id}
+                    className={`flex w-full cursor-pointer items-start gap-3 px-4 py-3 transition-colors hover:bg-gray-50 ${
+                      isActive ? "bg-blue-50" : ""
+                    }`}
+                    title={lesson.title}
+                  >
+                    <Circle className="mt-1.5 h-5 w-5 shrink-0 text-gray-400" />
+                    <div className="truncate">
+                      <p className="w-full">{lesson.title}</p>
+                      <p className="flex items-center gap-2">
+                        <Play className="h-3 w-3" />
+                        {convertTime(lesson.video_duration)}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>
