@@ -12,7 +12,7 @@ export const VideoPlayer = ({ lesson }: VideoPlayerTypeProps) => {
     // max-w-350 when sidebar isn't open
     <div className="relative mb-6 aspect-video w-full max-w-350 overflow-hidden rounded-lg bg-black">
       <ReactPlayer
-        src={lesson.videoUrl}
+        src={lesson.video_url}
         width="100%"
         height="100%"
         controls
