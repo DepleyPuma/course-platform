@@ -4,7 +4,7 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { Module } from "./sidebarContent";
+import { Lesson, Module } from "./sidebarContent";
 
 export const getAuthUser = async () => {
   const supabase = await createServerSupabase();
@@ -230,23 +230,65 @@ export const changePassword = async (
 export const getAllModules = async (): Promise<ActionResult<Module[]>> => {
   try {
     const user = await getAuthUser();
-    const supbase = await createServerSupabase();
+    const supabase = await createServerSupabase();
 
     if (!user) {
       return { success: false, error: "Nie jesteś zalogowany" };
     }
 
-    const { error, data } = await supbase.from("modules").select("*");
+    const { error, data } = await supabase
+      .from("modules")
+      .select(
+        `
+        id,
+        title,
+        order_index,
+        status,
+        lessons (
+          id,
+          title,
+          order_index,
+          video_duration
+        )
+      `,
+      )
+      .eq("status", "published")
+      .order("order_index")
+      .order("order_index", { referencedTable: "lessons" });
 
     if (error) {
       return { success: false, error: "Nie udało się pobrać listy modułów" };
     }
 
-    return { success: true, data: data };
+    return { success: true, data: data as Module[] };
   } catch (error) {
-    return {
-      success: false,
-      error: error,
-    };
+    return { success: false, error };
+  }
+};
+
+export const getLessonById = async (
+  id: string,
+): Promise<ActionResult<Lesson>> => {
+  try {
+    const user = await getAuthUser();
+    const supabase = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const { error, data } = await supabase
+      .from("lessons")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      return { success: false, error: "Nie udało się pobrać lekcji" };
+    }
+
+    return { success: true, data: data as Lesson };
+  } catch (error) {
+    return { success: false, error };
   }
 };
