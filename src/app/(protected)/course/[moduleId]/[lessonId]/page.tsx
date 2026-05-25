@@ -28,12 +28,46 @@ async function LessonPage({
   const currentModule = modulesResult.success
     ? modulesResult.data.find((m) => m.id === moduleId)
     : null;
+  const currentModuleIndex = currentModule?.order_index;
+  const prevModule = modulesResult.success
+    ? modulesResult.data.find((m) => m.order_index === currentModuleIndex! - 1)
+    : null;
+  const nextModule = modulesResult.success
+    ? modulesResult.data.find((m) => m.order_index === currentModuleIndex! + 1)
+    : null;
 
   const lessons = currentModule?.lessons ?? [];
-  const currentIndex = lessons.findIndex((l) => l.id === lessonId);
-  const prevLesson = currentIndex > 0 ? lessons[currentIndex - 1] : null;
+  const currentLessonIndex = lessons.findIndex((l) => l.id === lessonId);
+  const prevLesson =
+    currentLessonIndex > 0 ? lessons[currentLessonIndex - 1] : null;
   const nextLesson =
-    currentIndex < lessons.length - 1 ? lessons[currentIndex + 1] : null;
+    currentLessonIndex < lessons.length - 1
+      ? lessons[currentLessonIndex + 1]
+      : null;
+
+  const handleNextLesson = () => {
+    if (nextLesson) {
+      return `/course/${moduleId}/${nextLesson.id}`;
+    } else {
+      if (!nextModule || !nextModule.lessons?.[0]) return undefined;
+      return `/course/${nextModule.id}/${nextModule.lessons[0].id}`;
+    }
+  };
+
+  const handlePrevLesson = () => {
+    if (prevLesson) {
+      return `/course/${moduleId}/${prevLesson.id}`;
+    } else if (prevModule) {
+      const prevModuleLastLesson =
+        prevModule?.lessons![prevModule.lessons!.length - 1];
+      return `/course/${prevModule?.id}/${prevModuleLastLesson?.id}`;
+    } else {
+      return undefined;
+    }
+  };
+
+  const prevHref = handlePrevLesson();
+  const nextHref = handleNextLesson();
 
   return (
     <div className="flex h-full flex-1 flex-col items-start justify-start overflow-y-scroll p-4 md:p-8">
@@ -59,12 +93,12 @@ async function LessonPage({
       {/* Button navigation */}
       <div className="mx-auto flex w-full flex-col justify-between gap-4 border-t pt-6 sm:flex-row">
         <Button
-          disabled={!prevLesson}
+          disabled={!prevHref}
           className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
-          asChild={!!prevLesson}
+          asChild={!!prevHref}
         >
-          {prevLesson ? (
-            <Link href={`/course/${moduleId}/${prevLesson.id}`}>
+          {prevHref ? (
+            <Link href={prevHref}>
               <ArrowLeft className="h-4 w-4" />
               <span>Poprzednia lekcja</span>
             </Link>
@@ -77,12 +111,12 @@ async function LessonPage({
         </Button>
 
         <Button
-          disabled={!nextLesson}
+          disabled={!nextHref}
           className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
-          asChild={!!nextLesson}
+          asChild={!!nextHref}
         >
-          {nextLesson ? (
-            <Link href={`/course/${moduleId}/${nextLesson.id}`}>
+          {nextHref ? (
+            <Link href={nextHref}>
               <span>Zakończ i przejdź do następnej lekcji</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
