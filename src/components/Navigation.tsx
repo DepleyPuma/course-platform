@@ -11,7 +11,7 @@ import {
 import { Settings, LogOut, LayoutDashboard } from "lucide-react";
 import { Logo } from "./ui/logo";
 import Link from "next/link";
-import { logut } from "@/utils/actions";
+import { logout } from "@/utils/actions";
 
 interface NavigationTypeProps {
   firstname: string;
@@ -20,7 +20,7 @@ interface NavigationTypeProps {
 
 function Navigation({ firstname, isAdmin }: NavigationTypeProps) {
   const handleLogout = () => {
-    logut();
+    logout();
   };
 
   return (
