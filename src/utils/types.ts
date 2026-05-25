@@ -10,7 +10,7 @@ export type FormState =
 
 export type ActionResult<T> =
   | { success: true; data: T }
-  | { success: false; error: string | unknown };
+  | { success: false; error: string | unknown; message?: string };
 
 export type User = {
   id: string;
