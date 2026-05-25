@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { Lesson, Module } from "./sidebarContent";
+import { createBrowserClient } from "@supabase/ssr";
 
 export const getAuthUser = async () => {
   const supabase = await createServerSupabase();
@@ -19,6 +20,24 @@ export const getAuthUser = async () => {
 
   return user;
 };
+
+export async function sendResetPasswordLink(
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  const supabase = await createServerSupabase();
+  const email = String(formData.get("email") ?? "").trim();
+
+  if (!email) {
+    return { success: false, error: "Email nie może być pusty" };
+  }
+
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/update-password`,
+  });
+
+  return { success: true };
+}
 
 export async function login(
   prevState: FormState,
@@ -45,12 +64,12 @@ export async function login(
   redirect("/home");
 }
 
-export async function logut() {
+export async function logout() {
   const supabase = await createServerSupabase();
   const { error } = await supabase.auth.signOut();
 
   if (error) {
-    throw new Error(`Logut failed: ${error.message}`);
+    throw new Error(`Logout failed: ${error.message}`);
   }
 
   if (isRedirectError(error)) {
@@ -58,15 +77,6 @@ export async function logut() {
   }
 
   redirect("/login");
-}
-
-export async function resetPassword(
-  prevState: FormState,
-  formData: FormData,
-): Promise<FormState> {
-  console.log("reset password function");
-
-  return { success: true };
 }
 
 export const getUser = async (userId?: string): Promise<ActionResult<User>> => {
@@ -168,9 +178,13 @@ export const changePassword = async (
 ): Promise<FormState> => {
   try {
     const supabase = await createServerSupabase();
-    const currentPassword = String(formData.get("currentPassword"));
-    const newPassword = String(formData.get("newPassword"));
-    const confirmNewPassword = String(formData.get("confirmNewPassword"));
+    const currentPassword = String(
+      formData.get("currentPassword") ?? "",
+    ).trim();
+    const newPassword = String(formData.get("newPassword") ?? "").trim();
+    const confirmNewPassword = String(
+      formData.get("confirmNewPassword") ?? "",
+    ).trim();
 
     if (!currentPassword || currentPassword.length === 0) {
       return {
@@ -179,7 +193,7 @@ export const changePassword = async (
       };
     }
 
-    if (!newPassword || currentPassword.length === 0) {
+    if (!newPassword || newPassword.length === 0) {
       return {
         success: false,
         error: "Musisz podać nowe hasło",
@@ -188,7 +202,7 @@ export const changePassword = async (
 
     if (
       !confirmNewPassword ||
-      currentPassword.length === 0 ||
+      confirmNewPassword.length === 0 ||
       confirmNewPassword !== newPassword
     ) {
       return {
