@@ -15,18 +15,23 @@ export const CourseSidebar = ({
   sidebarCourseContent,
 }: CourseSidebarTypeProps) => {
   const pathname = usePathname();
+  const activeModuleId = pathname.split("/")[2];
 
-  const [expandedModules, setExpandedModules] = useState<string[]>([
-    sidebarCourseContent[0].id,
+  const [manuallyExpanded, setManuallyExpanded] = useState<string[]>([
+    activeModuleId ?? sidebarCourseContent[0].id,
   ]);
 
   const toggleModule = (moduleId: string) => {
-    setExpandedModules((prevState) =>
+    setManuallyExpanded((prevState) =>
       prevState.includes(moduleId)
         ? prevState.filter((id) => id !== moduleId)
         : [...prevState, moduleId],
     );
   };
+
+  const expandedModules = activeModuleId
+    ? [...new Set([activeModuleId, ...manuallyExpanded])]
+    : manuallyExpanded;
 
   const convertTime = (time: string | undefined) => {
     if (!time) return;
