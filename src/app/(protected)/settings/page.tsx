@@ -1,15 +1,23 @@
 import { SettingsPanel } from "@/components/settings/SettingsPanel";
 import { Sidebar } from "@/components/Sidebar";
-import { getUser } from "@/utils/actions";
+import { getUser, getUserProgress } from "@/utils/actions";
 import { sidebarSettingsContent } from "@/utils/sidebarContent";
 import Link from "next/link";
 
 export default async function SettingsPage() {
-  const result = await getUser();
-  if (!result.success) {
+  const userResult = await getUser();
+
+  if (!userResult.success) {
     return <div>Błąd podczas pobierania danych użytkownika</div>;
   }
-  const { data: user } = result;
+
+  const { data: user } = userResult;
+
+  const userProgressResult = await getUserProgress(user.id);
+
+  const userProgress = userProgressResult.success
+    ? userProgressResult.data
+    : null;
 
   return (
     <div className="flex flex-1 overflow-hidden">
@@ -29,7 +37,7 @@ export default async function SettingsPage() {
           );
         })}
       </Sidebar>
-      <SettingsPanel userFromSupabase={user} />
+      <SettingsPanel userFromSupabase={user} userProgress={userProgress} />
     </div>
   );
 }

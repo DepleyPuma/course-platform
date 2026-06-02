@@ -8,9 +8,16 @@ import { ProgressSection } from "./ProgressSection";
 
 type SettingsPanelProps = {
   userFromSupabase: UserType;
+  userProgress: {
+    completedLessons: number;
+    totalLessons: number;
+  } | null;
 };
 
-export function SettingsPanel({ userFromSupabase }: SettingsPanelProps) {
+export function SettingsPanel({
+  userFromSupabase,
+  userProgress,
+}: SettingsPanelProps) {
   const [user, setUser] = useState(userFromSupabase);
 
   return (
@@ -19,7 +26,7 @@ export function SettingsPanel({ userFromSupabase }: SettingsPanelProps) {
         <h1 className="mb-6 text-4xl font-bold">Ustawienia</h1>
         <UserProfileSection user={user} setUser={setUser} />
         <ChangePasswordSection />
-        <ProgressSection /> {/* My progress section - TO-DO */}
+        <ProgressSection userProgress={userProgress} />
       </div>
     </main>
   );

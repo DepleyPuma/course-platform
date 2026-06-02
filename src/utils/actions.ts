@@ -404,3 +404,50 @@ export const getCompletedLessons = async (): Promise<
     return { success: false, error: String(error) };
   }
 };
+
+export const getUserProgress = async (
+  userId: string,
+): Promise<
+  ActionResult<{ completedLessons: number; totalLessons: number }>
+> => {
+  try {
+    const user = await getAuthUser();
+    const supabase = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const [completed, total] = await Promise.all([
+      supabase
+        .from("user_progress")
+        .select("id", { count: "exact" })
+        .eq("user_id", userId)
+        .eq("completed", true),
+      supabase
+        .from("lessons")
+        .select("id", { count: "exact" })
+        .eq("status", "published"),
+    ]);
+
+    if (completed.error || total.error) {
+      return {
+        success: false,
+        error:
+          completed.error?.message ||
+          total.error?.message ||
+          "Błąd podczas pobierania danych o postępie",
+      };
+    }
+
+    return {
+      success: true,
+      data: {
+        completedLessons: completed.count ?? 0,
+        totalLessons: total.count ?? 0,
+      },
+    };
+  } catch (error) {
+    return { success: false, error: String(error) };
+  }
+};

@@ -1,7 +1,15 @@
-import React from "react";
 import { BarChart3 } from "lucide-react";
+import { ProgressBar } from "@/components/settings/ProgressBar";
 
-export const ProgressSection = () => {
+export const ProgressSection = ({
+  userProgress,
+}: {
+  userProgress: { completedLessons: number; totalLessons: number } | null;
+}) => {
+  console.log(userProgress);
+
+  if (!userProgress) return <div>Błąd podczas pobierania danych</div>;
+
   return (
     <section>
       <div className="mb-4 flex items-center gap-2">
@@ -10,7 +18,19 @@ export const ProgressSection = () => {
       </div>
 
       <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-6 md:gap-5">
-        <h2>Your progress will be displayed here</h2>
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-gray-500">Ukończone lekcje</p>
+          <p className="text-sm font-bold text-black">
+            {userProgress.completedLessons} / {userProgress.totalLessons}
+          </p>
+        </div>
+        <div>
+          <ProgressBar
+            value={
+              (userProgress.completedLessons / userProgress.totalLessons) * 100
+            }
+          />
+        </div>
       </div>
     </section>
   );
