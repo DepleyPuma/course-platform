@@ -1,22 +1,26 @@
 import { CourseSidebar } from "@/components/course/CourseSidebar";
-import { getAllModules } from "@/utils/actions";
+import { getAllModules, getCompletedLessons } from "@/utils/actions";
 
 export default async function CourseLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [modulesResult, completedLessonsResult] = await Promise.all([
+    getAllModules(),
+    getCompletedLessons(),
+  ]);
   const result = await getAllModules();
 
-  if (!result.success) return;
-
-  const { data } = result;
-
-  console.log(data);
+  if (!modulesResult.success) return;
+  if (!completedLessonsResult.success) return;
 
   return (
     <div className="flex flex-1 overflow-hidden">
-      <CourseSidebar sidebarCourseContent={data} />
+      <CourseSidebar
+        sidebarCourseContent={modulesResult.data}
+        completedLessonsIds={completedLessonsResult.data}
+      />
       {children}
     </div>
   );
