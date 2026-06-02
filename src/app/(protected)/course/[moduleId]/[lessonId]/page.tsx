@@ -1,8 +1,7 @@
+import { NextLessonButton } from "@/components/course/NextLessonButton";
+import { PrevLessonButton } from "@/components/course/PrevLessonButton";
 import { VideoPlayer } from "@/components/course/VideoPlayer";
-import { Button } from "@/components/ui/button";
 import { getAllModules, getLessonById } from "@/utils/actions";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import Link from "next/link";
 
 async function LessonPage({
   params,
@@ -22,19 +21,26 @@ async function LessonPage({
     );
   }
 
+  if (!modulesResult.success) {
+    return (
+      <div className="p-8 text-red-500">
+        Nie udało się załadować aktualnego modułu.
+      </div>
+    );
+  }
+
   const lesson = lessonResult.data;
 
   // Znajdź aktualny moduł i lekcje do nawigacji
-  const currentModule = modulesResult.success
-    ? modulesResult.data.find((m) => m.id === moduleId)
-    : null;
+  const currentModule = modulesResult.data.find((m) => m.id === moduleId);
+
   const currentModuleIndex = currentModule?.order_index;
-  const prevModule = modulesResult.success
-    ? modulesResult.data.find((m) => m.order_index === currentModuleIndex! - 1)
-    : null;
-  const nextModule = modulesResult.success
-    ? modulesResult.data.find((m) => m.order_index === currentModuleIndex! + 1)
-    : null;
+  const prevModule = modulesResult.data.find(
+    (m) => m.order_index === currentModuleIndex! - 1,
+  );
+  const nextModule = modulesResult.data.find(
+    (m) => m.order_index === currentModuleIndex! + 1,
+  );
 
   const lessons = currentModule?.lessons ?? [];
   const currentLessonIndex = lessons.findIndex((l) => l.id === lessonId);
@@ -92,41 +98,8 @@ async function LessonPage({
 
       {/* Button navigation */}
       <div className="mx-auto flex w-full flex-col justify-between gap-4 border-t pt-6 sm:flex-row">
-        <Button
-          disabled={!prevHref}
-          className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
-          asChild={!!prevHref}
-        >
-          {prevHref ? (
-            <Link href={prevHref}>
-              <ArrowLeft className="h-4 w-4" />
-              <span>Poprzednia lekcja</span>
-            </Link>
-          ) : (
-            <>
-              <ArrowLeft className="h-4 w-4" />
-              <span>Poprzednia lekcja</span>
-            </>
-          )}
-        </Button>
-
-        <Button
-          disabled={!nextHref}
-          className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
-          asChild={!!nextHref}
-        >
-          {nextHref ? (
-            <Link href={nextHref}>
-              <span>Zakończ i przejdź do następnej lekcji</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          ) : (
-            <>
-              <span>Zakończ i przejdź do następnej lekcji</span>
-              <ArrowRight className="h-4 w-4" />
-            </>
-          )}
-        </Button>
+        <PrevLessonButton prevHref={prevHref} />
+        <NextLessonButton lessonId={lessonId} nextHref={nextHref} />
       </div>
     </div>
   );
