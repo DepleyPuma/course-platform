@@ -3,9 +3,10 @@ import React from "react";
 
 type StatisticCardTypeProps = {
   card: Card;
+  value: number;
 };
 
-export default function StatisticCard({ card }: StatisticCardTypeProps) {
+export default function StatisticCard({ card, value }: StatisticCardTypeProps) {
   return (
     <div className={`${card.bgColor} rounded-lg border border-gray-200 p-6`}>
       <div className="flex items-center gap-4">
@@ -14,7 +15,7 @@ export default function StatisticCard({ card }: StatisticCardTypeProps) {
         </div>
         <div>
           <p className="text-sm text-gray-600">{card.label}</p>
-          <p className="mt-1 text-2xl font-bold">{card.value}</p>
+          <p className="mt-1 text-2xl font-bold">{value}</p>
         </div>
       </div>
     </div>
