@@ -10,7 +10,7 @@ export type FormState =
 
 export type ActionResult<T> =
   | { success: true; data: T }
-  | { success: false; error: string | unknown; message?: string };
+  | { success: false; error: string; message?: string };
 
 export type User = {
   id: string;
@@ -23,9 +23,9 @@ export type User = {
 };
 
 export type Card = {
+  key: string;
   icon: LucideIcon;
   label: string;
-  value: number | string;
   bgColor: string;
   iconColor: string;
 };
