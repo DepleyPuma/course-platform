@@ -2,17 +2,25 @@
 
 import { Sidebar } from "@/components/Sidebar";
 import { Module, sidebarSettingsContent } from "@/utils/sidebarContent";
-import { ChevronDown, ChevronRight, Circle, Play } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronRight,
+  Circle,
+  Play,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 type CourseSidebarTypeProps = {
   sidebarCourseContent: Module[];
+  completedLessonsIds: string[];
 };
 
 export const CourseSidebar = ({
   sidebarCourseContent,
+  completedLessonsIds,
 }: CourseSidebarTypeProps) => {
   const pathname = usePathname();
   const activeModuleId = pathname.split("/")[2];
@@ -90,7 +98,11 @@ export const CourseSidebar = ({
                     }`}
                     title={lesson.title}
                   >
-                    <Circle className="mt-1.5 h-5 w-5 shrink-0 text-gray-400" />
+                    {completedLessonsIds.includes(lesson.id) ? (
+                      <CheckCircle2 className="mt-2 h-5 w-5 shrink-0 text-[#BBCB2E]" />
+                    ) : (
+                      <Circle className="mt-2 h-5 w-5 shrink-0 text-gray-400" />
+                    )}
                     <div className="truncate">
                       <p className="w-full">{lesson.title}</p>
                       <p className="flex items-center gap-2">
