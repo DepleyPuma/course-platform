@@ -1,11 +1,11 @@
 "use server";
 
 import { createServerSupabase } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { redirect } from "next/navigation";
 import { Lesson, Module } from "./sidebarContent";
-import { createBrowserClient } from "@supabase/ssr";
+import { revalidatePath } from "next/cache";
 
 export const getAuthUser = async () => {
   const supabase = await createServerSupabase();
@@ -101,7 +101,7 @@ export const getUser = async (userId?: string): Promise<ActionResult<User>> => {
     if (isRedirectError(error)) throw error;
     return {
       success: false,
-      error: error,
+      error: String(error),
     };
   }
 };
@@ -128,7 +128,7 @@ export const getAllUsers = async (): Promise<ActionResult<User[]>> => {
   } catch (error) {
     return {
       success: false,
-      error: error,
+      error: String(error),
     };
   }
 };
@@ -276,7 +276,7 @@ export const getAllModules = async (): Promise<ActionResult<Module[]>> => {
 
     return { success: true, data: data as Module[] };
   } catch (error) {
-    return { success: false, error };
+    return { success: false, error: String(error) };
   }
 };
 
@@ -303,6 +303,104 @@ export const getLessonById = async (
 
     return { success: true, data: data as Lesson };
   } catch (error) {
-    return { success: false, error };
+    return { success: false, error: String(error) };
+  }
+};
+
+export const getDashboardData = async (): Promise<
+  ActionResult<Record<string, number>>
+> => {
+  try {
+    const user = await getAuthUser();
+    const supabase = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const { data, error } = await supabase.rpc("get_dashboard_counts").single();
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return {
+      success: true,
+      data: data as Record<string, number>,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: `Błąd podczas pobierania danych do dashboardu: ${error}`,
+    };
+  }
+};
+
+export const completeLesson = async (
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> => {
+  try {
+    const user = await getAuthUser();
+    const supabase = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const lessonId = String(formData.get("lessonId"));
+
+    if (!lessonId) {
+      return { success: false, error: "Brak ID lekcji" };
+    }
+
+    const { error } = await supabase.from("user_progress").upsert(
+      {
+        user_id: user.id,
+        lesson_id: lessonId,
+        completed: true,
+      },
+      { onConflict: "user_id,lesson_id" },
+    );
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    revalidatePath("/course", "layout");
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: String(error) };
+  }
+};
+
+export const getCompletedLessons = async (): Promise<
+  ActionResult<string[]>
+> => {
+  try {
+    const user = await getAuthUser();
+    const supabase = await createServerSupabase();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const { data, error } = await supabase
+      .from("user_progress")
+      .select("lesson_id")
+      .eq("user_id", user.id)
+      .eq("completed", true);
+
+    if (error) {
+      return { success: false, error: error.message };
+    }
+
+    return {
+      success: true,
+      data: data.map((l) => l.lesson_id),
+    };
+  } catch (error) {
+    return { success: false, error: String(error) };
   }
 };
