@@ -10,7 +10,6 @@ export default async function CourseLayout({
     getAllModules(),
     getCompletedLessons(),
   ]);
-  const result = await getAllModules();
 
   if (!modulesResult.success) return;
   if (!completedLessonsResult.success) return;
