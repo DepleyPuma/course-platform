@@ -1,16 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
-import { getAllModules } from "@/utils/actions";
+import { goBackToFirstLesson } from "@/utils/actions";
 import Link from "next/link";
 import React from "react";
 
 async function HomePage() {
-  const result = await getAllModules();
+  const results = await goBackToFirstLesson();
 
-  const href =
-    result.success && result.data[0]?.lessons?.[0]
-      ? `/course/${result.data[0].id}/${result.data[0].lessons[0].id}`
-      : null;
+  if (!results.success) return;
+
+  const href = results.data;
 
   return (
     <div className="flex flex-col items-center justify-center px-6 py-24 md:py-32">

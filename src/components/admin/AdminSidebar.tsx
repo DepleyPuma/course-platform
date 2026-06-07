@@ -1,10 +1,35 @@
 import React from "react";
 import { Sidebar } from "@/components/Sidebar";
-import { sidebarAdminContent } from "@/utils/sidebarContent";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
+import { BookOpen, LayoutDashboard, Users } from "lucide-react";
+import { goBackToFirstLesson } from "@/utils/actions";
 
-export default function AdminSidebar() {
+export const sidebarAdminContent = [
+  {
+    icon: LayoutDashboard,
+    label: "Dashboard",
+    path: "/admin/dashboard",
+  },
+  {
+    icon: BookOpen,
+    label: "Moduły",
+    path: "/admin/modules",
+  },
+  {
+    icon: Users,
+    label: "Użytkownicy",
+    path: "/admin/users",
+  },
+];
+
+export async function AdminSidebar() {
+  const results = await goBackToFirstLesson();
+
+  if (!results.success) return;
+
+  const href = results.data;
+
   return (
     <Sidebar>
       <h2 className="mb-4 hidden text-xl font-bold md:block">Panel Admina</h2>
@@ -24,7 +49,7 @@ export default function AdminSidebar() {
       })}
       <hr className="my-6" />
       <Link
-        href="/course/1/1"
+        href={href!}
         className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-100"
       >
         <ChevronLeft className="h-5 w-5" />
