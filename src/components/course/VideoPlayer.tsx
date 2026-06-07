@@ -1,4 +1,4 @@
-import { Lesson } from "@/utils/sidebarContent";
+import { Lesson } from "@/utils/types";
 import React from "react";
 import ReactPlayer from "react-player";
 
