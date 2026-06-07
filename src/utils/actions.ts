@@ -4,7 +4,7 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { redirect } from "next/navigation";
-import { Lesson, Module } from "./sidebarContent";
+import { Lesson, Module } from "@/utils/types";
 import { revalidatePath } from "next/cache";
 
 export const getAuthUser = async () => {
@@ -38,6 +38,35 @@ export async function sendResetPasswordLink(
 
   return { success: true };
 }
+
+export const resetPassword = async (
+  email: string,
+): Promise<ActionResult<void>> => {
+  try {
+    const supabase = await createServerSupabase();
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/update-password`,
+    });
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+        message: "Błąd podczas resetowania hasła",
+      };
+    }
+
+    return { success: true, data: undefined };
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
+    return {
+      success: false,
+      error: String(error),
+      message: "Błąd podczas resetowania hasła",
+    };
+  }
+};
 
 export async function login(
   prevState: FormState,
@@ -449,5 +478,40 @@ export const getUserProgress = async (
     };
   } catch (error) {
     return { success: false, error: String(error) };
+  }
+};
+
+export const goBackToFirstLesson = async (): Promise<
+  ActionResult<string | null>
+> => {
+  try {
+    const user = await getAuthUser();
+
+    if (!user) {
+      return { success: false, error: "Nie jesteś zalogowany" };
+    }
+
+    const allModules = await getAllModules();
+
+    if (!allModules.success) {
+      return {
+        success: false,
+        error: "Nie udało się pobrać wszyskich modułów",
+      };
+    }
+
+    const href = allModules.data[0]?.lessons?.[0]
+      ? `/course/${allModules.data[0].id}/${allModules.data[0].lessons[0].id}`
+      : null;
+
+    return {
+      success: true,
+      data: href,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: String(error),
+    };
   }
 };

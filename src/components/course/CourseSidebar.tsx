@@ -1,13 +1,14 @@
 "use client";
 
 import { Sidebar } from "@/components/Sidebar";
-import { Module, sidebarSettingsContent } from "@/utils/sidebarContent";
+import { Module } from "@/utils/types";
 import {
   CheckCircle2,
   ChevronDown,
   ChevronRight,
   Circle,
   Play,
+  Settings,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -120,20 +121,13 @@ export const CourseSidebar = ({
 
       <hr />
 
-      {sidebarSettingsContent.map((item) => {
-        const Icon = item.icon;
-
-        return (
-          <Link
-            key={item.path}
-            href={item.path}
-            className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-100"
-          >
-            <Icon className="h-5 w-5" />
-            <span>{item.label}</span>
-          </Link>
-        );
-      })}
+      <Link
+        href="/settings"
+        className="flex items-center gap-3 rounded-lg px-4 py-3 text-gray-700 transition-colors hover:bg-gray-100"
+      >
+        <Settings className="h-5 w-5" />
+        <span>Ustawienia</span>
+      </Link>
     </Sidebar>
   );
 };

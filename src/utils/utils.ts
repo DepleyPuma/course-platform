@@ -1,5 +1,5 @@
 import { BookOpen, CheckCircle2, UsersIcon, Video } from "lucide-react";
-import { Card } from "./types";
+import { Card } from "@/utils/types";
 
 export const statCards: Card[] = [
   {
@@ -8,6 +8,7 @@ export const statCards: Card[] = [
     label: "Moduły",
     bgColor: "bg-blue-50",
     iconColor: "text-blue-600",
+    showPercent: false,
   },
   {
     key: "lessons_count",
@@ -15,6 +16,7 @@ export const statCards: Card[] = [
     label: "Lekcje",
     bgColor: "bg-purple-50",
     iconColor: "text-purple-600",
+    showPercent: false,
   },
   {
     key: "users_count",
@@ -22,12 +24,14 @@ export const statCards: Card[] = [
     label: "Strażacy",
     bgColor: "bg-green-50",
     iconColor: "text-green-600",
+    showPercent: false,
   },
   {
-    key: "completed",
-    icon: CheckCircle2,
+    key: "completed_percent",
     label: "Ukończone",
+    icon: CheckCircle2,
     bgColor: "bg-[#F0F4E8]",
     iconColor: "text-[#BBCB2E]",
+    showPercent: true,
   },
 ];
