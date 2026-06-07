@@ -1,7 +1,7 @@
 import React from "react";
 
 function AllModulesPage() {
-  return <div>page</div>;
+  return <div>AllModulesPage</div>;
 }
 
 export default AllModulesPage;
