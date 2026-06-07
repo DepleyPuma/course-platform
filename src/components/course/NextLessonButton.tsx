@@ -34,7 +34,7 @@ export const NextLessonButton = ({ lessonId, nextHref }: Props) => {
       <Button
         type="submit"
         disabled={isPending}
-        className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex w-full cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:opacity-50"
       >
         <span>
           {isPending
