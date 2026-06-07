@@ -1,9 +1,8 @@
 import { Card } from "@/utils/types";
-import React from "react";
 
 type StatisticCardTypeProps = {
   card: Card;
-  value: number;
+  value: string | number;
 };
 
 export default function StatisticCard({ card, value }: StatisticCardTypeProps) {
