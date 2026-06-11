@@ -1,7 +1,7 @@
 import { NextLessonButton } from "@/components/course/NextLessonButton";
 import { PrevLessonButton } from "@/components/course/PrevLessonButton";
 import { VideoPlayer } from "@/components/course/VideoPlayer";
-import { getAllModules, getLessonById } from "@/utils/actions";
+import { getAllModules, getLessonById } from "@/actions";
 
 async function LessonPage({
   params,

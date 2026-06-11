@@ -4,7 +4,7 @@ import { Logo } from "@/components/ui/logo";
 import React, { useActionState, useState } from "react";
 import { Poppins } from "next/font/google";
 import { Button } from "@/components/ui/button";
-import { login } from "@/utils/actions";
+import { login } from "@/actions";
 import { FormState } from "@/utils/types";
 import { Eye, EyeOff } from "lucide-react";
 import { Label } from "@/components/ui/label";

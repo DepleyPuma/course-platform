@@ -1,6 +1,6 @@
 import { SettingsPanel } from "@/components/settings/SettingsPanel";
 import { SettingsSidebar } from "@/components/settings/SettingsSidebar";
-import { getUser, getUserProgress } from "@/utils/actions";
+import { getUser, getUserProgress } from "@/actions";
 
 export default async function SettingsPage() {
   const userResult = await getUser();

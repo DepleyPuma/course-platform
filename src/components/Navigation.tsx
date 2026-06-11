@@ -11,7 +11,7 @@ import {
 import { Settings, LogOut, LayoutDashboard } from "lucide-react";
 import { Logo } from "./ui/logo";
 import Link from "next/link";
-import { logout } from "@/utils/actions";
+import { logout } from "@/actions";
 
 interface NavigationTypeProps {
   firstname: string;

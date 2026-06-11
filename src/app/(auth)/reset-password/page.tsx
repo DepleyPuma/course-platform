@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/ui/logo";
-import { sendResetPasswordLink } from "@/utils/actions";
+import { sendResetPasswordLink } from "@/actions";
 import { FormState } from "@/utils/types";
 import { useActionState, useState } from "react";
 

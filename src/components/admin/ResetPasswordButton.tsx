@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Key } from "lucide-react";
 import { toast } from "sonner";
-import { resetPassword } from "@/utils/actions";
+import { resetPassword } from "@/actions";
 
 type ResetPasswordButtonProps = {
   email: string;

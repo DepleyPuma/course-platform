@@ -1,6 +1,6 @@
 import DashboardStatisticCardsSection from "@/components/admin/DashboardStatisticCardsSection";
 import { ProgressTable } from "@/components/admin/ProgressTable";
-import { getAllUsers, getDashboardData } from "@/utils/actions";
+import { getAllUsers, getDashboardData } from "@/actions";
 import { User } from "@/utils/types";
 
 async function AdminDashboradPage() {

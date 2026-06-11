@@ -2,7 +2,7 @@ import React from "react";
 import { Sidebar } from "@/components/Sidebar";
 import Link from "next/link";
 import { BookOpen, Settings } from "lucide-react";
-import { goBackToFirstLesson } from "@/utils/actions";
+import { goBackToFirstLesson } from "@/actions";
 
 export async function SettingsSidebar() {
   const results = await goBackToFirstLesson();

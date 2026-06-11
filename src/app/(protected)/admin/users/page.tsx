@@ -1,5 +1,5 @@
 import { UsersSection } from "@/components/settings/UsersSection";
-import { getAllUsers } from "@/utils/actions";
+import { getAllUsers } from "@/actions";
 import React from "react";
 
 async function UsersPage() {

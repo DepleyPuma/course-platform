@@ -1,6 +1,6 @@
 import React, { useActionState, useEffect } from "react";
 import { FormState } from "@/utils/types";
-import { changePassword } from "@/utils/actions";
+import { changePassword } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";

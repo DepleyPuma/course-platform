@@ -1,4 +1,4 @@
-import { getUserProgress } from "@/utils/actions";
+import { getUserProgress } from "@/actions";
 import { User } from "@/utils/types";
 import { ResetPasswordButton } from "./ResetPasswordButton";
 

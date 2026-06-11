@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/Sidebar";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { BookOpen, LayoutDashboard, Users } from "lucide-react";
-import { goBackToFirstLesson } from "@/utils/actions";
+import { goBackToFirstLesson } from "@/actions";
 
 export const sidebarAdminContent = [
   {

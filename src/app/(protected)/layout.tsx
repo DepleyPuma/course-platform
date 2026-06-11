@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import Navigation from "@/components/Navigation";
-import { getUser } from "@/utils/actions";
+import { getUser } from "@/actions";
 import { Toaster } from "@/components/ui/sonner";
 
 export default async function ProtectedLayout({

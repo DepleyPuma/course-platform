@@ -1,5 +1,5 @@
 import { CourseSidebar } from "@/components/course/CourseSidebar";
-import { getAllModules, getCompletedLessons } from "@/utils/actions";
+import { getAllModules, getCompletedLessons } from "@/actions";
 
 export default async function CourseLayout({
   children,

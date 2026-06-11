@@ -1,7 +1,7 @@
 // components/course/CompleteLessonButton.tsx
 "use client";
 
-import { completeLesson } from "@/utils/actions";
+import { completeLesson } from "@/actions";
 import { FormState } from "@/utils/types";
 import { useActionState, useEffect } from "react";
 import { useRouter } from "next/navigation";

@@ -1,6 +1,6 @@
 import React, { useActionState, useEffect, useState } from "react";
 import { FormState, User as UserType } from "@/utils/types";
-import { updateMyProfile } from "@/utils/actions";
+import { updateMyProfile } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";

@@ -1,4 +1,4 @@
-import { getUserProgress } from "@/utils/actions";
+import { getUserProgress } from "@/actions";
 import { User } from "@/utils/types";
 import React from "react";
 import { ResetPasswordButton } from "@/components/admin/ResetPasswordButton";

@@ -1,7 +1,7 @@
 import Page404 from "@/app/not-found";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { Toaster } from "@/components/ui/sonner";
-import { getUser } from "@/utils/actions";
+import { getUser } from "@/actions";
 
 export default async function AdminProtectedLayout({
   children,
