@@ -99,9 +99,5 @@ export async function logout() {
     throw new Error(`Logout failed: ${error.message}`);
   }
 
-  if (isRedirectError(error)) {
-    throw error;
-  }
-
   redirect("/login");
 }
