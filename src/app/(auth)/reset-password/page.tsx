@@ -66,7 +66,7 @@ function RestartPasswordPage() {
             className="mt-4 cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
             disabled={isPending}
           >
-            {isPending ? "Wysyłanie..." : "Wyślij link do zresetowanie hasła"}
+            {isPending ? "Wysyłanie..." : "Wyślij link resetujący hasło"}
           </Button>
         </form>
       </div>

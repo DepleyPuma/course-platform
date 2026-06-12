@@ -17,7 +17,7 @@ function UpdatePasswordPage() {
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
   );
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
@@ -32,10 +32,10 @@ function UpdatePasswordPage() {
       return;
     }
 
-    // if (newPassword.length < 8) {
-    //   setError("Hasłu musi składać się z minimum 8 znaków");
-    //   return;
-    // }
+    if (newPassword.length < 8) {
+      setError("Hasło musi składać się z minimum 8 znaków");
+      return;
+    }
 
     if (!confirmNewPassword || confirmNewPassword !== newPassword) {
       setError("Powtórzone hasło nie zgadza się z nowym hasłem");
