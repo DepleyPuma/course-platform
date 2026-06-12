@@ -26,7 +26,7 @@ export default async function AdminProtectedLayout({
   return (
     <div className="flex flex-1 overflow-hidden">
       <AdminSidebar />
-      {children}
+      <main className="flex-1 overflow-y-auto">{children}</main>
       <Toaster />
     </div>
   );
