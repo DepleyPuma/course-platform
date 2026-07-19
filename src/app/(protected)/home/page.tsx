@@ -1,8 +1,7 @@
+import { goBackToFirstLesson } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/ui/logo";
-import { goBackToFirstLesson } from "@/actions";
 import Link from "next/link";
-import React from "react";
 
 async function HomePage() {
   const results = await goBackToFirstLesson();

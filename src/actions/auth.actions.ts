@@ -101,3 +101,78 @@ export async function logout() {
 
   redirect("/login");
 }
+
+export async function completeProfile(
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> {
+  try {
+    const user = await getAuthUser();
+    console.log("user", user);
+
+    const supabase = await createServerSupabase();
+
+    const firstname = String(formData.get("firstname") ?? "").trim();
+    const lastname = String(formData.get("lastname") ?? "").trim();
+    const password = String(formData.get("password") ?? "").trim();
+    const confirmPassword = String(
+      formData.get("confirmPassword") ?? "",
+    ).trim();
+
+    if (!firstname || !lastname) {
+      return { success: false, error: "Imię i nazwisko są wymagane" };
+    }
+
+    if (!password || !confirmPassword) {
+      return {
+        success: false,
+        error: "Hasło i powtórzenie hasła są wymagane",
+      };
+    }
+
+    if (password.length < 8) {
+      return {
+        success: false,
+        error: "Hasło musi składać się z minimum 8 znaków",
+      };
+    }
+
+    if (password !== confirmPassword) {
+      return { success: false, error: "Hasła nie są identyczne" };
+    }
+
+    const { error } = await supabase
+      .from("users")
+      .update({
+        firstname,
+        lastname,
+      })
+      .eq("id", user.id);
+
+    if (error) {
+      return {
+        success: false,
+        error: error.message,
+      };
+    }
+
+    const { error: passwordError } = await supabase.auth.updateUser({
+      password: password,
+    });
+
+    if (passwordError) {
+      return {
+        success: false,
+        error: passwordError.message,
+      };
+    }
+
+    return { success: true };
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
+    return {
+      success: false,
+      error: String(error),
+    };
+  }
+}
