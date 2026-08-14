@@ -18,7 +18,7 @@ function RestartPasswordPage() {
   );
 
   return (
-    <div className="flex h-screen flex-1 items-center justify-center bg-(--second-color-hover)">
+    <div className="flex h-screen flex-1 items-center justify-center bg-brand-hover">
       <div className="mx-2 flex flex-col items-center justify-center rounded-lg bg-white p-10 lg:w-1/2 2xl:w-1/3">
         <Logo heigth={75} width={75} className="py-4" />
         <h1 className="text-center text-3xl font-bold text-black md:text-4xl">
@@ -63,7 +63,7 @@ function RestartPasswordPage() {
           <Button
             type="submit"
             size="lg"
-            className="mt-4 cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
+            className="mt-4 cursor-pointer bg-brand px-8 py-6 text-lg font-semibold text-black hover:bg-brand-hover"
             disabled={isPending}
           >
             {isPending ? "Wysyłanie..." : "Wyślij link resetujący hasło"}

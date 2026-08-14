@@ -29,7 +29,7 @@ async function HomePage() {
       <Link href={href!}>
         <Button
           size="lg"
-          className="cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
+          className="cursor-pointer bg-brand px-8 py-6 text-lg font-semibold text-black hover:bg-brand-hover"
         >
           Zacznij teraz
         </Button>

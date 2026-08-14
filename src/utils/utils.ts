@@ -30,8 +30,8 @@ export const statCards: Card[] = [
     key: "completed_percent",
     label: "Ukończone",
     icon: CheckCircle2,
-    bgColor: "bg-[#F0F4E8]",
-    iconColor: "text-[#BBCB2E]",
+    bgColor: "bg-brand-subtle",
+    iconColor: "text-brand",
     showPercent: true,
   },
 ];

@@ -14,7 +14,7 @@ export const ProgressSection = ({
     <section>
       <div className="mb-4 flex items-center gap-2">
         <BarChart3 className="h-5 w-5 text-gray-600" />
-        <h2 className="text-xl font-bold">Mój postęp</h2>
+        <h2 className="text-xl font-bold">Twój postęp</h2>
       </div>
 
       <div className="flex flex-col gap-4 rounded-lg border border-gray-200 bg-white p-6 md:gap-5">

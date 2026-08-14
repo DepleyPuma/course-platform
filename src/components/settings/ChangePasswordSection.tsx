@@ -71,7 +71,7 @@ export const ChangePasswordSection = () => {
 
         <Button
           type="submit"
-          className="cursor-pointer self-end bg-(--second-color) text-black hover:bg-(--second-color-hover)"
+          className="cursor-pointer self-end bg-brand text-black hover:bg-brand-hover"
           disabled={isPasswordChange}
         >
           Resetuj hasło

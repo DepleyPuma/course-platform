@@ -3,6 +3,7 @@ import { PrevLessonButton } from "@/components/course/PrevLessonButton";
 import { VideoPlayer } from "@/components/course/VideoPlayer";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { getAllModules, getLessonById } from "@/actions";
+import { LessonContent } from "@/components/course/LessonContent";
 
 async function LessonPage({
   params,
@@ -28,7 +29,6 @@ async function LessonPage({
 
   const lesson = lessonResult.data;
 
-  // Znajdź aktualny moduł i lekcje do nawigacji
   const currentModule = modulesResult.data.find((m) => m.id === moduleId);
 
   const currentModuleIndex = currentModule?.order_index;
@@ -74,18 +74,13 @@ async function LessonPage({
 
   return (
     <div className="flex h-full flex-1 flex-col items-start justify-start overflow-y-scroll p-4 md:p-8">
-      {/* Header */}
       <header className="bg-white px-2 py-4">
         <p className="text-sm text-gray-500">{currentModule?.title}</p>
         <h1 className="text-2xl font-bold">{lesson.title}</h1>
       </header>
 
-      {/* Video Player */}
-      <div className="relative flex w-full justify-center">
-        <VideoPlayer lesson={lesson} />
-      </div>
+      <LessonContent lesson={lesson} />
 
-      {/* Description */}
       <div className="flex-1 px-2 py-8">
         <h2 className="mb-4 text-xl font-semibold">Opis lekcji</h2>
         <p className="whitespace-pre-wrap text-gray-700">
@@ -93,7 +88,6 @@ async function LessonPage({
         </p>
       </div>
 
-      {/* Button navigation */}
       <div className="mx-auto flex w-full flex-col justify-between gap-4 border-t pt-6 sm:flex-row">
         <PrevLessonButton prevHref={prevHref} />
         <NextLessonButton lessonId={lessonId} nextHref={nextHref} />

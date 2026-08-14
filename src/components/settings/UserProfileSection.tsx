@@ -122,7 +122,7 @@ export const UserProfileSection = ({
         <Button
           onClick={updateUserData}
           type="submit"
-          className="cursor-pointer self-end bg-(--second-color) text-black hover:bg-(--second-color-hover)"
+          className="cursor-pointer self-end bg-brand text-black hover:bg-brand-hover"
         >
           {isUpdateUserPending ? "Zapisuje zmiany..." : "Zapisz zmiany"}
         </Button>

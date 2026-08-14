@@ -5,8 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --second-color: #bbcb2e;
-  --second-color-hover: #a5b629;
+  --color-brand: #bbcb2e;
+  --color-brand-hover: #a5b629;
+  --color-brand-subtle: #f0f4e8;
 }
 
 @theme inline {

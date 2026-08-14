@@ -11,7 +11,7 @@ export function PrevLessonButton({ prevHref }: PrevLessonButtonTypeProps) {
   return (
     <Button
       disabled={!prevHref}
-      className="flex cursor-pointer items-center gap-2 bg-[#BBCB2E] px-6 py-6 text-black hover:bg-[#a5b629] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
+      className="flex cursor-pointer items-center gap-2 bg-brand px-6 py-6 text-black hover:bg-brand-hover disabled:cursor-not-allowed disabled:bg-gray-300 disabled:opacity-50"
       asChild={!!prevHref}
     >
       {prevHref ? (

@@ -33,9 +33,9 @@ function Navigation({ firstname, isAdmin }: NavigationTypeProps) {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="rounded-full focus:ring-2 focus:ring-[#BBCB2E] focus:outline-none">
+              <button className="rounded-full focus:ring-2 focus:ring-brand focus:outline-none">
                 <Avatar className="h-10 w-10 cursor-pointer">
-                  <AvatarFallback className="bg-[#BBCB2E] text-white">
+                  <AvatarFallback className="bg-brand text-white">
                     {firstname[0].toLocaleUpperCase()}
                   </AvatarFallback>
                 </Avatar>

@@ -5,7 +5,7 @@ export function ProgressBar({ value }: { value: number }) {
     <div className="justify-betweens flex items-center gap-4">
       <div className="h-3 w-full rounded-full bg-gray-200">
         <div
-          className="h-full rounded-full bg-[#BBCB2E]"
+          className="h-full rounded-full bg-brand"
           style={{ width: `${value}%` }}
         ></div>
       </div>

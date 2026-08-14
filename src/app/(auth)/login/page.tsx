@@ -31,7 +31,7 @@ function LoginPage() {
 
   return (
     <div
-      className={`flex h-screen flex-1 items-center justify-center bg-(--second-color-hover) ${poppins.className}`}
+      className={`flex h-screen flex-1 items-center justify-center bg-brand-hover ${poppins.className}`}
     >
       <div className="mx-2 flex flex-col items-center justify-center rounded-lg bg-white p-10 lg:w-1/2 2xl:w-1/3">
         <Logo heigth={75} width={75} className="py-4" />
@@ -92,7 +92,7 @@ function LoginPage() {
           <Button
             type="submit"
             size="lg"
-            className="mt-12 cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
+            className="mt-12 cursor-pointer bg-brand px-8 py-6 text-lg font-semibold text-black hover:bg-brand-hover"
             disabled={isPending}
           >
             {isPending ? "Loguje się..." : "Zaloguj się"}

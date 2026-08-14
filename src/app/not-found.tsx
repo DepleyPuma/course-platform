@@ -5,7 +5,7 @@ import React from "react";
 function Page404() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center px-6">
-      <h1 className="absolute -z-10 mb-8 text-center text-4xl font-bold text-(--second-color-hover) opacity-30 md:text-[700px]">
+      <h1 className="absolute -z-10 mb-8 text-center text-4xl font-bold text-brand-hover opacity-30 md:text-[700px]">
         404
       </h1>
 
@@ -16,7 +16,7 @@ function Page404() {
       <Link href="/home">
         <Button
           size="lg"
-          className="cursor-pointer bg-(--second-color) px-8 py-6 text-lg font-semibold text-black hover:bg-(--second-color-hover)"
+          className="cursor-pointer bg-brand px-8 py-6 text-lg font-semibold text-black hover:bg-brand-hover"
         >
           Wróć do strony głownej
         </Button>

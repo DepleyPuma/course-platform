@@ -119,12 +119,12 @@ export const CourseSidebar = ({
                     title={lesson.title}
                   >
                     {completedLessonsIds.includes(lesson.id) ? (
-                      <CheckCircle2 className="mt-2 h-5 w-5 shrink-0 text-[#BBCB2E]" />
+                      <CheckCircle2 className="text-brand mt-2 h-5 w-5 shrink-0" />
                     ) : (
                       <Circle className="mt-2 h-5 w-5 shrink-0 text-gray-400" />
                     )}
-                    <div className="truncate">
-                      <p className="w-full">{lesson.title}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate">{lesson.title}</p>
                       <p className="flex items-center gap-2">
                         <LessonTypeIcon className="h-3 w-3" />
                         {label(lesson)}

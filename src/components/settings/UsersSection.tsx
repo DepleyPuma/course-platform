@@ -97,7 +97,7 @@ export async function UsersSection({ users }: UsersSectionTypeProps) {
                     <div className="flex items-center gap-3">
                       <div className="h-2 max-w-[200px] flex-1 rounded-full bg-gray-200">
                         <div
-                          className="h-2 rounded-full bg-[#BBCB2E] transition-all"
+                          className="h-2 rounded-full bg-brand transition-all"
                           style={{ width: `${percent}%` }}
                         />
                       </div>
