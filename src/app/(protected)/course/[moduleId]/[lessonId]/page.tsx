@@ -1,6 +1,7 @@
 import { NextLessonButton } from "@/components/course/NextLessonButton";
 import { PrevLessonButton } from "@/components/course/PrevLessonButton";
 import { VideoPlayer } from "@/components/course/VideoPlayer";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { getAllModules, getLessonById } from "@/actions";
 
 async function LessonPage({
@@ -16,16 +17,12 @@ async function LessonPage({
   ]);
 
   if (!lessonResult.success) {
-    return (
-      <div className="p-8 text-red-500">Nie udało się załadować lekcji.</div>
-    );
+    return <ErrorMessage>Nie udało się załadować lekcji.</ErrorMessage>;
   }
 
   if (!modulesResult.success) {
     return (
-      <div className="p-8 text-red-500">
-        Nie udało się załadować aktualnego modułu.
-      </div>
+      <ErrorMessage>Nie udało się załadować aktualnego modułu.</ErrorMessage>
     );
   }
 

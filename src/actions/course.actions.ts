@@ -25,6 +25,7 @@ export const getAllModules = async (): Promise<ActionResult<Module[]>> => {
         lessons (
           id,
           title,
+          type,
           order_index,
           video_duration
         )

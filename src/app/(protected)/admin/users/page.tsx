@@ -1,4 +1,5 @@
 import { UsersSection } from "@/components/settings/UsersSection";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { getAllUsers } from "@/actions";
 import React from "react";
 
@@ -7,9 +8,9 @@ async function UsersPage() {
 
   if (!results.success) {
     return (
-      <p className="p-4 text-xl text-red-500">
+      <ErrorMessage className="text-xl">
         Nie udało się pobrać użytkowników
-      </p>
+      </ErrorMessage>
     );
   }
 

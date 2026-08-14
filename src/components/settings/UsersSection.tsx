@@ -2,6 +2,7 @@ import { getUserProgress } from "@/actions";
 import { User } from "@/utils/types";
 import React from "react";
 import { ResetPasswordButton } from "@/components/admin/ResetPasswordButton";
+import { ErrorTableRow } from "@/components/ui/error-table-row";
 import { Crown, User as UserIcon } from "lucide-react";
 
 type UsersSectionTypeProps = {
@@ -47,12 +48,10 @@ export async function UsersSection({ users }: UsersSectionTypeProps) {
             {rows.map(({ user, progress }) => {
               if (!progress.success) {
                 return (
-                  <tr key={user.id}>
-                    <td colSpan={5} className="p-3 text-red-500">
-                      Błąd podczas pobierania danych o użytkowniku{" "}
-                      {user.firstname} {user.lastname}
-                    </td>
-                  </tr>
+                  <ErrorTableRow key={user.id} colSpan={5}>
+                    Błąd podczas pobierania danych o użytkowniku{" "}
+                    {user.firstname} {user.lastname}
+                  </ErrorTableRow>
                 );
               }
 

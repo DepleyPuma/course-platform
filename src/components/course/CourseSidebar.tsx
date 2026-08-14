@@ -1,12 +1,15 @@
 "use client";
 
 import { Sidebar } from "@/components/Sidebar";
-import { Module } from "@/utils/types";
+import { Lesson, Module } from "@/utils/types";
 import {
+  AlignLeft,
   CheckCircle2,
   ChevronDown,
   ChevronRight,
   Circle,
+  FileText,
+  LucideIcon,
   Play,
   Settings,
 } from "lucide-react";
@@ -17,6 +20,27 @@ import { useState } from "react";
 type CourseSidebarTypeProps = {
   sidebarCourseContent: Module[];
   completedLessonsIds: string[];
+};
+
+const convertTime = (time: string | undefined) => {
+  if (!time) return;
+
+  const [h, m, s] = time.split(":").map(Number);
+
+  if (h > 0) {
+    return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  }
+
+  return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+};
+
+const LESSON_TYPE_META: Record<
+  Lesson["type"],
+  { icon: LucideIcon; label: (lesson: Lesson) => string | undefined }
+> = {
+  video: { icon: Play, label: (lesson) => convertTime(lesson.video_duration) },
+  pdf: { icon: FileText, label: () => "PDF" },
+  text: { icon: AlignLeft, label: () => "Tekst" },
 };
 
 export const CourseSidebar = ({
@@ -45,18 +69,6 @@ export const CourseSidebar = ({
         ? prevState.filter((id) => id !== moduleId)
         : [...prevState, moduleId],
     );
-  };
-
-  const convertTime = (time: string | undefined) => {
-    if (!time) return;
-
-    const [h, m, s] = time.split(":").map(Number);
-
-    if (h > 0) {
-      return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-    }
-
-    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
   };
 
   return (
@@ -94,6 +106,8 @@ export const CourseSidebar = ({
               {module.lessons?.map((lesson) => {
                 const href = `/course/${module.id}/${lesson.id}`;
                 const isActive = pathname === href;
+                const { icon: LessonTypeIcon, label } =
+                  LESSON_TYPE_META[lesson.type];
 
                 return (
                   <Link
@@ -112,8 +126,8 @@ export const CourseSidebar = ({
                     <div className="truncate">
                       <p className="w-full">{lesson.title}</p>
                       <p className="flex items-center gap-2">
-                        <Play className="h-3 w-3" />
-                        {convertTime(lesson.video_duration)}
+                        <LessonTypeIcon className="h-3 w-3" />
+                        {label(lesson)}
                       </p>
                     </div>
                   </Link>

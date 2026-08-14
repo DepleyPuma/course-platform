@@ -1,5 +1,6 @@
 import DashboardStatisticCardsSection from "@/components/admin/DashboardStatisticCardsSection";
 import { ProgressTable } from "@/components/admin/ProgressTable";
+import { ErrorMessage } from "@/components/ui/error-message";
 import { getAllUsers, getDashboardData } from "@/actions";
 import { User } from "@/utils/types";
 
@@ -7,8 +8,7 @@ async function AdminDashboradPage() {
   const results = await Promise.all([getDashboardData(), getAllUsers()]);
 
   if (!results[0].success || !results[1].success) {
-    console.log("Nie udało się pobrać danych");
-    return;
+    return <ErrorMessage>Nie udało się pobrać danych.</ErrorMessage>;
   }
 
   const dashboardData = results[0].data as Record<string, number>;

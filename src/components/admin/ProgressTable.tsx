@@ -1,6 +1,7 @@
 import { getUserProgress } from "@/actions";
 import { User } from "@/utils/types";
 import { ResetPasswordButton } from "./ResetPasswordButton";
+import { ErrorTableRow } from "@/components/ui/error-table-row";
 
 type ProgressTableTypeProps = {
   users: User[];
@@ -42,12 +43,10 @@ export async function ProgressTable({ users }: ProgressTableTypeProps) {
             {rows.map(({ user, progress }) => {
               if (!progress.success) {
                 return (
-                  <tr key={user.id}>
-                    <td colSpan={4} className="p-3 text-red-500">
-                      Błąd podczas pobierania danych o użytkowniku{" "}
-                      {user.firstname} {user.lastname}
-                    </td>
-                  </tr>
+                  <ErrorTableRow key={user.id} colSpan={4}>
+                    Błąd podczas pobierania danych o użytkowniku{" "}
+                    {user.firstname} {user.lastname}
+                  </ErrorTableRow>
                 );
               }
 
