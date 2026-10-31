@@ -1,18 +1,18 @@
 "use server";
 
-import { getAuthUser } from "@/actions/auth.actions";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { ActionResult } from "@/utils/types";
+import { requireAdmin } from "../users.actions";
 
 export const getDashboardData = async (): Promise<
   ActionResult<Record<string, number>>
 > => {
   try {
-    const user = await getAuthUser();
+    const result = await requireAdmin();
     const supabase = await createServerSupabase();
 
-    if (!user) {
-      return { success: false, error: "Nie jesteś zalogowany" };
+    if (!result.success) {
+      return { success: false, error: result.error };
     }
 
     const { data, error } = await supabase.rpc("get_dashboard_counts").single();

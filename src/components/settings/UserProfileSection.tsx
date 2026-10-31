@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { User } from "lucide-react";
+import { Copy, User } from "lucide-react";
 
 type UserProfileSectionTypeProps = {
   user: UserType;
@@ -31,6 +31,13 @@ export const UserProfileSection = ({
     } else {
       return "Brak dodatkowych ról";
     }
+  };
+
+  const copyEmailToClipboard = () => {
+    navigator.clipboard.writeText(user.email);
+    toast.success("Email został skopiowany do schowka", {
+      position: "bottom-right",
+    });
   };
 
   const updateUserData = () => {
@@ -91,14 +98,25 @@ export const UserProfileSection = ({
 
         <div className="flex flex-col gap-3">
           <Label className="flex flex-col items-start">Email</Label>
-          <Input
-            defaultValue={user.email}
-            type="text"
-            name="email"
-            id="email"
-            disabled
-            className="cursor-not-allowed border-0 bg-gray-100"
-          />
+          <div className="relative">
+            <Input
+              defaultValue={user.email}
+              type="text"
+              name="email"
+              id="email"
+              disabled
+              className="cursor-not-allowed border-0 bg-gray-100 pr-10"
+            />
+            <Button
+              variant="ghost"
+              type="button"
+              onClick={copyEmailToClipboard}
+              title="Kopiuj email"
+              className="absolute top-1/2 right-4 -translate-y-1/2 cursor-pointer text-gray-500 hover:bg-transparent hover:text-gray-800"
+            >
+              <Copy className="h-4 w-4" />
+            </Button>
+          </div>
           <p className="pt-2 text-sm text-gray-500">
             Email może zmienić tylko administrator
           </p>
@@ -122,7 +140,7 @@ export const UserProfileSection = ({
         <Button
           onClick={updateUserData}
           type="submit"
-          className="cursor-pointer self-end bg-brand text-black hover:bg-brand-hover"
+          className="bg-brand hover:bg-brand-hover cursor-pointer self-end text-black"
         >
           {isUpdateUserPending ? "Zapisuje zmiany..." : "Zapisz zmiany"}
         </Button>

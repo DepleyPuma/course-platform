@@ -15,7 +15,7 @@ async function AdminDashboradPage() {
   const users = results[1].data as User[];
 
   return (
-    <div className="mx-auto max-w-7xl flex-1 px-4 py-12">
+    <div>
       <h1 className="mb-8 text-3xl font-bold">Dashboard</h1>
       <DashboardStatisticCardsSection dashboardData={dashboardData} />
       <ProgressTable users={users} />

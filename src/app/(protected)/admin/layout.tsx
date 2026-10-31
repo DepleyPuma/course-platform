@@ -1,32 +1,25 @@
-import Page404 from "@/app/not-found";
+import Page403 from "@/app/forbidden";
 import { AdminSidebar } from "@/components/admin/AdminSidebar";
 import { Toaster } from "@/components/ui/sonner";
-import { getUser } from "@/actions";
+import { requireAdmin } from "@/actions";
 
 export default async function AdminProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const result = await getUser();
+  const result = await requireAdmin();
 
   if (!result.success) {
-    console.log(result.error);
-    return;
-  }
-
-  const {
-    data: { role },
-  } = result;
-
-  if (role !== "admin") {
-    return <Page404 />;
+    return <Page403 />;
   }
 
   return (
     <div className="flex flex-1 overflow-hidden">
       <AdminSidebar />
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="mx-auto max-w-7xl flex-1 overflow-y-auto px-4 py-12">
+        {children}
+      </main>
       <Toaster />
     </div>
   );

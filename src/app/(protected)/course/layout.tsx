@@ -20,7 +20,9 @@ export default async function CourseLayout({
         sidebarCourseContent={modulesResult.data}
         completedLessonsIds={completedLessonsResult.data}
       />
-      {children}
+      <main className="flex h-full flex-1 flex-col items-start justify-start overflow-y-scroll p-4 md:p-8">
+        {children}
+      </main>
     </div>
   );
 }

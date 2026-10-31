@@ -17,7 +17,8 @@ async function UsersPage() {
   const users = results.data;
 
   return (
-    <div className="mx-auto max-w-7xl flex-1 px-4 pt-18">
+    <div>
+      <h1 className="mb-8 text-3xl font-bold">Użytkownicy</h1>
       <UsersSection users={users} />
     </div>
   );

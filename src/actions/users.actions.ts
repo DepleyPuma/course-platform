@@ -4,32 +4,49 @@ import { getAuthUser } from "@/actions/auth.actions";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { ActionResult, FormState, User } from "@/utils/types";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { cache } from "react";
 
-export const getUser = async (userId?: string): Promise<ActionResult<User>> => {
-  try {
-    const user = await getAuthUser();
-    const supabase = await createServerSupabase();
-    const { error, data } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", userId ? userId : user.id)
-      .maybeSingle();
+export const getUser = cache(
+  async (userId?: string): Promise<ActionResult<User>> => {
+    try {
+      const user = await getAuthUser();
+      const supabase = await createServerSupabase();
+      const { error, data } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", userId ? userId : user.id)
+        .maybeSingle();
 
-    if (error) {
+      if (error) {
+        return {
+          success: false,
+          error: "Nie udało się znaleść użytkownika",
+        };
+      }
+
+      return { success: true, data };
+    } catch (error) {
+      if (isRedirectError(error)) throw error;
       return {
         success: false,
-        error: "Nie udało się znaleść użytkownika",
+        error: String(error),
       };
     }
+  },
+);
 
-    return { success: true, data };
-  } catch (error) {
-    if (isRedirectError(error)) throw error;
-    return {
-      success: false,
-      error: String(error),
-    };
+export const requireAdmin = async (): Promise<ActionResult<User>> => {
+  const result = await getUser();
+
+  if (!result.success) {
+    return result;
   }
+
+  if (result.data.role !== "admin") {
+    return { success: false, error: "Brak uprawnień administratora" };
+  }
+
+  return result;
 };
 
 export const getAllUsers = async (): Promise<ActionResult<User[]>> => {

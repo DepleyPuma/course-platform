@@ -1,6 +1,5 @@
 import { NextLessonButton } from "@/components/course/NextLessonButton";
 import { PrevLessonButton } from "@/components/course/PrevLessonButton";
-import { VideoPlayer } from "@/components/course/VideoPlayer";
 import { ErrorMessage } from "@/components/ui/error-message";
 import { getAllModules, getLessonById } from "@/actions";
 import { LessonContent } from "@/components/course/LessonContent";
@@ -73,7 +72,7 @@ async function LessonPage({
   const nextHref = handleNextLesson();
 
   return (
-    <div className="flex h-full flex-1 flex-col items-start justify-start overflow-y-scroll p-4 md:p-8">
+    <>
       <header className="bg-white px-2 py-4">
         <p className="text-sm text-gray-500">{currentModule?.title}</p>
         <h1 className="text-2xl font-bold">{lesson.title}</h1>
@@ -92,7 +91,7 @@ async function LessonPage({
         <PrevLessonButton prevHref={prevHref} />
         <NextLessonButton lessonId={lessonId} nextHref={nextHref} />
       </div>
-    </div>
+    </>
   );
 }
 
